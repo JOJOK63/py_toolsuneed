@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'toolbox',
     'budget',
 ]
 
@@ -54,10 +55,15 @@ ROOT_URLCONF = 'toolbox.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'toolbox/templates')],
+         'DIRS': [
+        #     os.path.join(BASE_DIR, 'toolbox/templates'),
+        #     os.path.join(BASE_DIR, 'budget/templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                # debug ajouté par moi
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -77,6 +83,17 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+
+#A mettre en place pour utiliser postgre ensuite
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'toolsuneed',
+#         'USER': 'myuser',
+#         'PASSWORD': 'mypassword',
+#         'HOST': 'db',        # ← nom du service docker-compose
+#         'PORT': '5432',
+#     }
 }
 
 
@@ -115,3 +132,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "toolbox/static/toolbox"),
+#     os.path.join(BASE_DIR, "budget/static/budget"),
+# ]
