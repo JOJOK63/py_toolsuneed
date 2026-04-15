@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Devise dashboard</title>
-</head>
-<body>
+{% extends "toolbox/base.html" %}
+{% block title %}Mon Dashboard{% endblock %}
+{% block content %}
     <h1>DEVISE DASHBOARD</h1>
-<p>{{ testing }}</p>
-<ul>
-    {% for number in numberss %}
-        <li>{{ number }}</li>
-    {% endfor %}
-</ul>
-</body>
-</html>
+    <p>{{ testing }}</p>
+    <ul>
+        {% for number in numberss %}
+            <li>{{ number }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
