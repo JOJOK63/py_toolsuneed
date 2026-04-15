@@ -1,0 +1,1 @@
+/home/jordankraria/Documents/py_toolsUneed/backend/.venv/bin/python /home/jordankraria/Documents/py_toolsUneed/backend/manage.py runserver

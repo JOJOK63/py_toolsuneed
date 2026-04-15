@@ -3,11 +3,11 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Mon site</title>
+    <title>Toolbox Dashboard</title>
     <link rel="stylesheet" href="{% static 'toolbox/css/style.css' %}">
 </head>
 <body>
-    <h1>Bienvenue sur ton dashboard {{ prenom }} {{ nom | upper }}</h1>
+    <h1>DASHBOARD: {{ prenom }} {{ nom | upper }}</h1>
     <p>{{ date | date:"d F Y H:i:s"}}</p>
 </body>
 </html>
