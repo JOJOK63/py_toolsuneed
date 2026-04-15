@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'toolbox',
     'budget',
+    'currency'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 
-#A mettre en place pour utiliser postgre ensuite
+# mettre en place pour utiliser postgre ensuite
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',

@@ -21,5 +21,6 @@ from .views import index
 urlpatterns = [
     path('',index, name="index"),
     path('budget/', include("budget.urls")),
+    path('devise/', include("currency.urls")),
     path('admin/', admin.site.urls),
 ]
