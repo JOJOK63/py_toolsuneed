@@ -9,6 +9,10 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d toolsuneed"]
+      interval: 5s
+      retries: 5
 
   backend:
     build: ./backend
@@ -17,10 +21,13 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
-      - ./backend:/app   # synchronisation host <-> container
-    command: python manage.py runserver 0.0.0.0:8000
+      - ./backend:/app
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
 
   frontend:
     build: ./frontend
@@ -28,6 +35,7 @@ services:
       - "5173:5173"
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     command: npm run dev -- --host
 
 volumes:
