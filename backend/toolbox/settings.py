@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'toolbox',
     'budget',
-    'currency'
+    'currency',
+    'tailwind',
+    'theme'
 ]
 
 MIDDLEWARE = [
@@ -138,3 +140,9 @@ STATIC_URL = 'static/'
 #     os.path.join(BASE_DIR, "toolbox/static/toolbox"),
 #     os.path.join(BASE_DIR, "budget/static/budget"),
 # ]
+
+# settings.py for tailwind
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

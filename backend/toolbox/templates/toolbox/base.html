@@ -1,17 +1,37 @@
+{% load static %}
+{% load tailwind_tags %}
+
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>{% block title %}Mon site{% endblock %}</title>
+    <meta charset="UTF-8">
+
+    <title>{% block title %}Toolbox{% endblock %}</title>
+
+    <!-- CSS global -->
+    <link rel="stylesheet" href="{% static 'toolbox/css/base.css' %}">
+    <!-- Tailwind -->
+    {% tailwind_css %}
+
+    {% block extra_css %}{% endblock %}
 </head>
+
 <body>
-{%  block test %}
-    <h1>HHHAZHAHA</h1>
-{% endblock %}
-{% block content %}
+
+<!-- NAVBAR globale -->
+{% block navbar %}
+    <nav class="p-4 bg-gray-800 text-white text-center">
+        <h1>Ma navbar</h1>
+    </nav>
 {% endblock %}
 
-{% load static %}
-<script src="{% static 'js/chat.js' %}"></script>
+<!-- CONTENU -->
+<main class="container mx-auto p-4 bg-yellow-200">
+    {% block content %}{% endblock %}
+</main>
+
+{% block extra_js %}
+{% endblock %}
 
 </body>
 </html>

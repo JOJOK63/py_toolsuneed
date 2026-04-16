@@ -1,13 +1,17 @@
+{% extends "toolbox/base.html"  %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Toolbox Dashboard</title>
+
+{% block title %}
+    Toolbox Dashboard
+{% endblock %}
+
+{% block extra_css %}
     <link rel="stylesheet" href="{% static 'toolbox/css/style.css' %}">
-</head>
-<body>
+{% endblock %}
+
+{% block content %}
     <h1>DASHBOARD: {{ prenom }} {{ nom | upper }}</h1>
     <p>{{ date | date:"d F Y H:i:s"}}</p>
-</body>
-</html>
+{% endblock %}
+
+
