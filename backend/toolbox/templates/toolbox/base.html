@@ -20,13 +20,20 @@
 
 <!-- NAVBAR globale -->
 {% block navbar %}
-    <nav class="p-4 bg-gray-800 text-white text-center">
+    <nav class="p-4 bg-gray-800 text-white flex gap-4">
         <h1>Ma navbar</h1>
+        <div>
+            <ul>
+                <li><a href="{% url 'index' %}">Accueil</a></li>
+                <li><a href="{% url 'budget-index' %}">Budget</a></li>
+                <li><a href="{% url 'currency-index' %}">Devise</a></li>
+            </ul>
+        </div>
     </nav>
 {% endblock %}
 
 <!-- CONTENU -->
-<main class="container mx-auto p-4 bg-yellow-200">
+<main class="m-4">
     {% block content %}{% endblock %}
 </main>
 

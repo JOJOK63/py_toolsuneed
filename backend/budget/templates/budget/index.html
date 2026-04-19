@@ -1,8 +1,8 @@
-{% extends %}
+{% extends "toolbox/base.html" %}
 {% load static %}
 
 {% block title %}
-Budget
+    Budget
 {% endblock %}
 
 {% block extra_css %}
@@ -11,20 +11,20 @@ Budget
 
 {% block content %}
 
-<div class="p-6">
+    <div class="p-6">
 
-    <h1 class="text-2xl font-bold">
-        BUDGET: {{ prenom }} {{ nom|upper }}
-    </h1>
+        <h1 class="text-2xl font-bold">
+            BUDGET: {{ prenom }} {{ nom|upper }}
+        </h1>
 
-    <p class="text-gray-600">
-        {{ date|date:"d F Y H:i:s" }}
-    </p>
+        <p class="text-gray-600">
+            {{ date|date:"d F Y H:i:s" }}
+        </p>
 
-    <div class="bg-blue-500 text-white p-4 rounded mt-4">
-        Tailwind fonctionne 🚀
+        <div class="bg-blue-500 text-white p-4 rounded mt-4">
+            Tailwind fonctionne 🚀
+        </div>
+
     </div>
-
-</div>
 
 {% endblock %}

@@ -17,8 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from currency.views import dashboard
+from currency.views import index
 
 urlpatterns = [
-    path('',dashboard, name="dashboard"),
+    path('', index, name="currency-index"),
 ]
