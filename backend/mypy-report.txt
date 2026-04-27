@@ -1,0 +1,2 @@
+delete.py:2: error: List item 1 has incompatible type "str"; expected "int"  [list-item]
+Found 1 error in 1 file (checked 1 source file)

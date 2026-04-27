@@ -5,7 +5,7 @@ new Chart(ctx, {
         labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         datasets: [{
             label: "USD",
-            data: [1, 7, 3, 4, 5, 6, 6, 8, 9, 5],
+            data: [5, 1, 8, 12, 5, 1, 7, 2, 9, 5],
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
             backgroundColor: [
