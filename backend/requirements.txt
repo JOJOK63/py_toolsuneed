@@ -1,6 +1,14 @@
-django==6.0.3
+Django==6.0.3
 djangorestframework==3.17.0
 psycopg2-binary==2.9.11
 django-cors-headers==4.9.0
-asgiref==3.11.1
-sqlparse==0.5.5
+
+# Tailwind (si utilisé)
+django-tailwind==4.4.2
+pytailwindcss==0.3.0
+
+# Timezone (important en Docker)
+tzdata==2026.1
+
+mypy==1.20.2
+pre_commit==4.5.1
