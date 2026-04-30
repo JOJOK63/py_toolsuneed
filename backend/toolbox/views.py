@@ -6,5 +6,5 @@ def index(request):
     print("ma date " + str(date))
     print(type(date), flush=True)
 
-    return render(request, 'index.html',
+    return render(request, 'toolbox/index.html',
                   context={"prenom" : "Mohamed", "nom" : "binto", "date" : datetime.today()})

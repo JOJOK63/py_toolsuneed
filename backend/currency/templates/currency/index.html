@@ -1,0 +1,15 @@
+{% extends "toolbox/base.html" %}
+{% load static %}
+{% block title %}Devise Dashboard TUN{% endblock %}
+{% block content %}
+    <h1>DEVISE DASHBOARD</h1>
+
+    <div class="flex flex-1 justify-center items-center m-4">
+        <canvas id="chart"></canvas>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'budget/script/graph.js' %}"></script>
+{% endblock %}

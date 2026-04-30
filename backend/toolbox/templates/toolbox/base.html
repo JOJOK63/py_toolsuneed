@@ -1,0 +1,46 @@
+{% load static %}
+{% load tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <title>{% block title %}ToolsUNeed{% endblock %}</title>
+
+    <!-- CSS global -->
+    <link rel="stylesheet" href="{% static 'toolbox/css/base.css' %}">
+    <!-- Tailwind -->
+    {% tailwind_css %}
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+<!-- NAVBAR globale -->
+{% block navbar %}
+    <nav class="p-4 bg-gray-800 text-white flex gap-4">
+        <h1>Ma navbar</h1>
+        <div>
+            <ul>
+                <li><a href="{% url 'index' %}">Accueil</a></li>
+                <li><a href="{% url 'budget-index' %}">Budget</a></li>
+                <li><a href="{% url 'currency-index' %}">Devise</a></li>
+                <li><a href="{% url 'todolist-index' %}">Todolist</a></li>
+                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
+<!-- CONTENU -->
+<main class="m-4">
+    {% block content %}{% endblock %}
+</main>
+
+{% block extra_js %}
+{% endblock %}
+
+</body>
+</html>

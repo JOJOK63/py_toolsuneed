@@ -1,4 +1,14 @@
-django
-djangorestframework
-psycopg2-binary
-django-cors-headers
+Django==6.0.3
+djangorestframework==3.17.0
+psycopg2-binary==2.9.11
+django-cors-headers==4.9.0
+
+# Tailwind (si utilisé)
+django-tailwind==4.4.2
+pytailwindcss==0.3.0
+
+# Timezone (important en Docker)
+tzdata==2026.1
+
+mypy==1.20.2
+pre_commit==4.5.1
