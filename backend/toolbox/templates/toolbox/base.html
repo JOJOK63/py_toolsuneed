@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>{% block title %}Toolbox{% endblock %}</title>
+    <title>{% block title %}ToolsUNeed{% endblock %}</title>
 
     <!-- CSS global -->
     <link rel="stylesheet" href="{% static 'toolbox/css/base.css' %}">
@@ -27,6 +27,8 @@
                 <li><a href="{% url 'index' %}">Accueil</a></li>
                 <li><a href="{% url 'budget-index' %}">Budget</a></li>
                 <li><a href="{% url 'currency-index' %}">Devise</a></li>
+                <li><a href="{% url 'todolist-index' %}">Todolist</a></li>
+                <li><a href="{% url 'admin:index' %}">Admin</a></li>
             </ul>
         </div>
     </nav>

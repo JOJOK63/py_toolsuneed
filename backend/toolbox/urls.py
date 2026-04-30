@@ -19,8 +19,9 @@ from django.urls import path, include
 from .views import index
 
 urlpatterns = [
-    path('',index, name="index"),
+    path('', index, name="index"),
     path('budget/', include("budget.urls")),
     path('devise/', include("currency.urls")),
+    path('todolist/', include("todolist.urls")),
     path('admin/', admin.site.urls),
 ]

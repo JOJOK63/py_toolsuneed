@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-lyw34gz50^-8a2fvcneqjo3t852d1qw&w#gw5_qc8yq16tz$d=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS :list[str] = []
 APPEND_SLASH = True
 
 # Application definition
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'budget',
     'currency',
     'tailwind',
-    'theme'
+    'theme',
+    'todolist'
 ]
 
 MIDDLEWARE = [
@@ -58,9 +59,9 @@ ROOT_URLCONF = 'toolbox.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-         'DIRS': [
-        #     os.path.join(BASE_DIR, 'toolbox/templates'),
-        #     os.path.join(BASE_DIR, 'budget/templates')
+        'DIRS': [
+            #     os.path.join(BASE_DIR, 'toolbox/templates'),
+            #     os.path.join(BASE_DIR, 'budget/templates')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -77,7 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'toolbox.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
@@ -87,18 +87,17 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 
-# mettre en place pour utiliser postgre ensuite
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'toolsuneed',
-#         'USER': 'myuser',
-#         'PASSWORD': 'mypassword',
-#         'HOST': 'db',        # ← nom du service docker-compose
-#         'PORT': '5432',
-#     }
+    # mettre en place pour utiliser postgre ensuite
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.postgresql',
+    #         'NAME': 'toolsuneed',
+    #         'USER': 'myuser',
+    #         'PASSWORD': 'mypassword',
+    #         'HOST': 'db',        # ← nom du service docker-compose
+    #         'PORT': '5432',
+    #     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -118,7 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
@@ -129,7 +127,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
