@@ -13,7 +13,9 @@
     <h1>TODOLIST</h1>
 
     <form method="POST" action="{% url 'add-collection' %}">
-
+        {% csrf_token %}
+        <input type="text" name="collection-name">
+        <button type="submit">ajouter</button>
     </form>
 {% endblock %}
 

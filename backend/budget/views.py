@@ -1,12 +1,17 @@
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from rest_framework import generics
+from .models import Category
+from .serializers import CategorySerializer
+from typing import Any
 
-def index(request):
-    return render(request,"budget/index.html", context={
-        "nom" : "balilou",
-        "prenom" : "John",
+class CategoryListCreateView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+def index(request: HttpRequest) -> HttpResponse:
+    return render(request, "budget/index.html", context={
+        "nom": request.user,
+        "prenom": "John",
     })
-
-def budget(request,number_budget):
-    if number_budget in ["01","02","03"]:
-        return render(request, f"budget/budget_{number_budget}.html")
-    return render(request, "budget/budget_not_found.html")

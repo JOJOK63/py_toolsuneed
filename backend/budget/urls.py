@@ -1,8 +1,11 @@
+from django.contrib import admin
 from django.urls import path
-
-from .views import index, budget
+from . import views
 
 urlpatterns = [
-    path('',index, name="budget-index"),
-    path('budget-<str:number_budget>/',budget, name="budget-detail")
+    # Page HTML
+    path('', views.index, name="budget-index"),
+
+    # API
+    path('category/', views.CategoryListCreateView.as_view(), name="category-list"),
 ]
