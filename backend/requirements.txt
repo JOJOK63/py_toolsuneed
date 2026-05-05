@@ -1,14 +1,25 @@
+# Django core
 Django==6.0.3
+
+# API
 djangorestframework==3.17.0
+
+# OpenAPI / Swagger / Redoc
+drf-spectacular==0.28.0
+
+# Database PostgreSQL (si tu l’actives plus tard)
 psycopg2-binary==2.9.11
+
+# CORS (frontend React/Vue)
 django-cors-headers==4.9.0
 
-# Tailwind (si utilisé)
+# Tailwind
 django-tailwind==4.4.2
 pytailwindcss==0.3.0
 
-# Timezone (important en Docker)
+# Timezone support (important Docker / Linux)
 tzdata==2026.1
 
+# Dev tools
 mypy==1.20.2
-pre_commit==4.5.1
+pre-commit==4.5.1
