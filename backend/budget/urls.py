@@ -8,5 +8,5 @@ urlpatterns = [
 
     # API
     path('category/', views.CategoryListCreateView.as_view()),
-    path('category/<uuid:id>/', views.CategoryRetrieveUpdateDestroyView.as_view()),
+    path('category/<int:id>/', views.CategoryRetrieveUpdateDestroyView.as_view()),
 ]
