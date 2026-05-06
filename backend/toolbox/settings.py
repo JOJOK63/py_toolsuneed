@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'toolbox',
     'budget',
     'currency',
+    "corsheaders",
     'tailwind',
     'theme',
     'todolist'
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'toolbox.urls'
@@ -167,3 +169,8 @@ SPECTACULAR_SETTINGS = {
     # Cette ligne force le multipart sur tous les endpoints avec fichiers
     'COMPONENT_SPLIT_REQUEST': True,  # ← IMPORTANT
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # port Vite par défaut
+]
+
