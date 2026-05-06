@@ -152,3 +152,18 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
+
+### configuration for media files
+### le chemin utilisé dans le navigateur
+MEDIA_URL = "/media/"
+### "disque dur, le fichier réel"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Toolbox API',
+    'DESCRIPTION': 'API documentation',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # Cette ligne force le multipart sur tous les endpoints avec fichiers
+    'COMPONENT_SPLIT_REQUEST': True,  # ← IMPORTANT
+}

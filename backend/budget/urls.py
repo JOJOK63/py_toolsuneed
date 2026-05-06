@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.index, name="budget-index"),
 
     # API
-    path('category/', views.CategoryListCreateView.as_view(), name="category-list"),
+    path('category/', views.CategoryListCreateView.as_view()),
+    path('category/<uuid:id>/', views.CategoryRetrieveUpdateDestroyView.as_view()),
 ]

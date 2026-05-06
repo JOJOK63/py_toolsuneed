@@ -18,7 +18,7 @@ TRANSACTION_TYPE = [
 class Category(models.Model):
     name = models.CharField(max_length=255)
     color = models.CharField(max_length=7)
-    icon = models.URLField(blank=True)
+    icon = models.ImageField(upload_to="categories/icons/", blank=True, null=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self) -> str:
@@ -53,7 +53,7 @@ class FinancialTransaction(models.Model):
     name = models.CharField(max_length=255)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     detail = models.TextField(blank=True)
-    transaction_type = models.CharField(max_length=4, choices=TRANSACTION_TYPE)  # ⚠️ 4 → 8
+    transaction_type = models.CharField(max_length=4, choices=TRANSACTION_TYPE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
