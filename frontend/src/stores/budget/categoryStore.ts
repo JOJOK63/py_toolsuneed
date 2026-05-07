@@ -1,27 +1,62 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import { categoryApi, type Category } from '@/api/modules/budget'
+import {defineStore} from 'pinia'
+import {ref} from 'vue'
+import { type Category, categoryApi, type CategoryCreate } from '@/api/modules/budget.ts'
 
-export const useCategoryStore = defineStore('category', () => {
+// defineStore('category', ...) → 'category' nom unique
+// identifier ce store dans l'app. 1 par application :
+// 'category', 'toolbox', 'currency'...
+export  const useCategoryStore = defineStore('categoryStore', ()=>{
   const categories = ref<Category[]>([])
-  const loading = ref(false)
+  const loading = ref<boolean>(false) // attend on une réponse de l'api
+  const error = ref<string | null>(null) // ERREUR  ou pas ?
 
   async function fetchAll() {
     loading.value = true
-    const { data } = await categoryApi.getAll()
-    categories.value = data
-    loading.value = false
+    error.value = null
+    try {
+      const response = await categoryApi.getAll()
+      categories.value = response.data
+    } catch(e) {
+      error.value = "Impossible de charger les catégories."
+    } finally {
+      loading.value = false // désactive le loader quoi qu'il arrive
+    }
   }
 
-  async function create(payload: Omit<Category, 'id'>) {
-    const { data } = await categoryApi.create(payload)
-    categories.value.push(data)
+  async function create( data: CategoryCreate) {
+    try {
+      const response = await categoryApi.create(data)
+      categories.value.push(response.data)
+    } catch (e) {
+      error.value = 'Impossible de créer la catégorie.'
+    }
+  }
+
+  async function update(id: number, data: Partial<CategoryCreate> ) {
+    try{
+      const response = await categoryApi.update(id, data)
+
+      const index = categories.value.findIndex(category => category.id === id)
+      if(index !== -1) {
+        categories.value[index] = response.data
+      }
+
+    } catch (e){
+      error.value = 'Impossible de modifier la catégorie'
+    }
   }
 
   async function remove(id: number) {
-    await categoryApi.delete(id)
-    categories.value = categories.value.filter((c) => c.id !== id)
+    try {
+      await categoryApi.delete(id)
+      //retourne un nouvea tableau sans l'lément supprimé
+      categories.value = categories.value.filter(category => category.id !== id)
+    } catch (e) {
+      error.value = 'Impossible de supprimer la catégorie'
+    }
   }
 
-  return { categories, loading, fetchAll, create, remove }
+  // Ce qu'on expose aux composants Vue
+  // Tout ce qui n'est pas ici est "privé" au store
+  return { categories, loading, error, fetchAll, create, update, remove }
 })
