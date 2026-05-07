@@ -23,3 +23,6 @@ tzdata==2026.1
 # Dev tools
 mypy==1.20.2
 pre-commit==4.5.1
+
+#Pillow
+Pillow==12.2.0
