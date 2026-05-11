@@ -17,13 +17,17 @@ class CategorySerializer(serializers.ModelSerializer[Category]):
 
 
 class SubcategorySerializer(serializers.ModelSerializer[Subcategory]):
-    icon = serializers.ImageField(
-        required=True,
-        allow_null=False,
-        use_url=True
-    )
-    category = CategorySerializer(read_only=True)
+
+    # EN LECTURE SEULEMENT → on renvoie l'objet Category complet
+    # source='category' dit à DRF d'aller chercher le champ 'category' du model
+    category_detail = CategorySerializer(source='category', read_only=True)
+
     class Meta:
         model = Subcategory
-        fields = '__all__'
+        fields = ['id', 'name', 'icon', 'category', 'category_detail']
         read_only_fields = ('id',)
+
+    # 'category' reste un simple IntegerField (FK)
+    # → en POST tu envoies juste { category: 1 }
+    # 'category_detail' est read_only
+    # → en GET tu reçois { category: 1, category_detail: { id: 1, name: "...", ... } }

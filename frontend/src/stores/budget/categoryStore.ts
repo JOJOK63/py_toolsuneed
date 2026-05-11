@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia'
 import {ref} from 'vue'
-import { type Category, categoryApi, type CategoryCreate } from '@/api/modules/budget.ts'
+import { type Category, categoryApi, type CategoryCreate } from '@/api/modules/budget/category.ts'
+import axios from 'axios'
 
 // defineStore('category', ...) → 'category' nom unique
 // identifier ce store dans l'app. 1 par application :
@@ -23,12 +24,26 @@ export  const useCategoryStore = defineStore('categoryStore', ()=>{
     }
   }
 
-  async function create( data: CategoryCreate) {
+  async function create(data: CategoryCreate) {
     try {
       const response = await categoryApi.create(data)
       categories.value.push(response.data)
     } catch (e) {
-      error.value = 'Impossible de créer la catégorie.'
+      // axios met la réponse Django dans e.response.data
+      if (axios.isAxiosError(e) && e.response?.data) {
+        // Django renvoie un objet d'erreurs par champ
+        // ex: { color: ["category with this color already exists."] }
+        const djangoErrors = e.response.data
+        // On transforme l'objet en string lisible
+        error.value = Object.entries(djangoErrors)
+          .map(([field, messages]) => `${field} : ${(messages as string[]).join(', ')}`)
+          .join(' | ')
+        setTimeout(() => {
+          error.value = null
+        }, 3000)
+      } else {
+        error.value = 'Impossible de créer la catégorie.'
+      }
     }
   }
 
@@ -56,7 +71,11 @@ export  const useCategoryStore = defineStore('categoryStore', ()=>{
     }
   }
 
+  function clearError(){
+    error.value = null
+  }
+
   // Ce qu'on expose aux composants Vue
   // Tout ce qui n'est pas ici est "privé" au store
-  return { categories, loading, error, fetchAll, create, update, remove }
+  return { categories, loading, error, fetchAll, create, update, remove, clearError }
 })

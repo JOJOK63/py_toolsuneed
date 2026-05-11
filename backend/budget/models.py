@@ -17,7 +17,7 @@ TRANSACTION_TYPE = [
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    color = models.CharField(max_length=7)
+    color = models.CharField(max_length=7, unique=True)
     icon = models.ImageField(upload_to="categories/icons/", blank=False, null=False)
     is_active = models.BooleanField(default=True)
 

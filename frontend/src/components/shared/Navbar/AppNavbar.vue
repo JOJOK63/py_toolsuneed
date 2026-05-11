@@ -1,11 +1,46 @@
 <script setup lang="ts">
 import ThemeSelectorC from '@/components/shared/Navbar/ThemeSelectorC.vue'
+import { RouterLink } from 'vue-router'
+
+import { ref } from 'vue'
+
+const menuOpen = ref(false)
+
+function closeMenu() {
+  menuOpen.value = false
+}
 </script>
 
 <template>
   <div class="navbar bg-base-100 shadow-sm">
-    <div class="flex-1">
+    <div class="flex">
       <a class="btn btn-ghost text-xl">ToolsUneed</a>
+    </div>
+
+    <div class="navbar-center hidden lg:flex flex-1">
+      <ul class="menu menu-horizontal px-1">
+        <li>
+          <details :open="menuOpen" @toggle="menuOpen = ($event.target as HTMLDetailsElement).open">
+            <summary>Menu</summary>
+            <ul class="p-2 bg-base-100 w-40 z-1">
+              <li>
+                <RouterLink to="/" @click="closeMenu" :class="{ active: $route.path === '/' }">
+                  Accueil
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink
+                  to="/budget"
+                  @click="closeMenu"
+                  :class="{ active: $route.path.startsWith('/budget') }"
+                >
+                  Budget
+                </RouterLink>
+              </li>
+            </ul>
+          </details>
+        </li>
+      </ul>
     </div>
 
     <div class="flex gap-2">

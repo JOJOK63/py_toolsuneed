@@ -1,4 +1,4 @@
-import api from '../index'
+import api from '../../index.ts'
 
 export interface Category{
   id:number
