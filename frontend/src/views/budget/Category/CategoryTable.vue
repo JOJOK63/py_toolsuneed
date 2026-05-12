@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { Category, CategoryCreate } from '@/api/modules/budget/category'
+import AddBtn from '@/components/shared/Btn/AddBtn.vue'
+import SaveBtn from '@/components/shared/Btn/SaveBtn.vue'
+import CancelBtn from '@/components/shared/Btn/CancelBtn.vue'
+import EditBtn from '@/components/shared/Btn/EditBtn.vue'
+import DeleteBtn from '@/components/shared/Btn/DeleteBtn.vue'
 
 // defineProps = données que le PARENT envoie à ce composant
 // Le parent passe :categories="store.categories"
@@ -12,6 +17,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   delete: [id: number]
   update: [id: number, data: Partial<CategoryCreate>]
+  openModal: [] // ← nouvel emit
 }>()
 
 // L'état d'édition reste LOCAL à ce composant — le parent n'en a pas besoin
@@ -64,7 +70,10 @@ function handleDelete(id: number) {
           <th>Icône</th>
           <th>Nom</th>
           <th>Couleur</th>
-          <th>Actions</th>
+          <th class="flex items-center gap-3">
+            <p>Actions</p>
+            <AddBtn @click="emit('openModal')" />
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -76,8 +85,8 @@ function handleDelete(id: number) {
             <td><input v-model="editingColor" type="color" /></td>
             <td>
               <div class="flex gap-2">
-                <button class="btn btn-success btn-sm" @click="handleUpdate">Sauvegarder</button>
-                <button class="btn btn-ghost btn-sm" @click="cancelEdit">Annuler</button>
+                <SaveBtn @click="handleUpdate" />
+                <CancelBtn @click="cancelEdit" />
               </div>
             </td>
           </template>
@@ -85,7 +94,7 @@ function handleDelete(id: number) {
           <template v-else>
             <td>
               <div class="mask mask-squircle h-10 w-10" :style="{ background: category.color }">
-                <img v-if="category.icon" :src="category.icon" class="h-10 w-10" />
+                <img v-if="category.icon" :src="category.icon" class="h-10 w-10 p-1" />
               </div>
             </td>
             <td class="font-bold">{{ category.name }}</td>
@@ -96,16 +105,9 @@ function handleDelete(id: number) {
               ></span>
             </td>
             <td>
-              <div class="flex gap-2">
-                <button
-                  class="btn btn-primary btn-outline btn-sm"
-                  @click="startEdit(category.id, category.name, category.color)"
-                >
-                  Modifier
-                </button>
-                <button class="btn btn-error btn-outline btn-sm" @click="handleDelete(category.id)">
-                  Supprimer
-                </button>
+              <div class="flex gap-5">
+                <EditBtn @click="startEdit(category.id, category.name, category.color)" />
+                <DeleteBtn @click="handleDelete(category.id)" />
               </div>
             </td>
           </template>

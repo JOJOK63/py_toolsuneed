@@ -1,6 +1,10 @@
 @import './base.css';
 
 @import "tailwindcss";
+
 @plugin "daisyui" {
   themes: all;
+}
+.menu a.active {
+  @apply bg-primary text-primary-content;
 }

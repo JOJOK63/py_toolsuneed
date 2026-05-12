@@ -12,4 +12,8 @@ urlpatterns = [
 
     path('subcategory/', views.SubcategoryListCreateView.as_view()),
     path('subcategory/<int:id>/', views.SubcategoryRetrieveUpdateDestroyView.as_view()),
+
+    path('budget/', views.BudgetListCreateView.as_view()),
+    path('budget/<int:id>/', views.BudgetRetrieveUpdateDestroyView.as_view()),
+
 ]

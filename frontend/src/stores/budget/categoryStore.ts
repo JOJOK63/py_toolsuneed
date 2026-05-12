@@ -1,12 +1,12 @@
-import {defineStore} from 'pinia'
-import {ref} from 'vue'
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
 import { type Category, categoryApi, type CategoryCreate } from '@/api/modules/budget/category.ts'
 import axios from 'axios'
 
 // defineStore('category', ...) → 'category' nom unique
 // identifier ce store dans l'app. 1 par application :
 // 'category', 'toolbox', 'currency'...
-export  const useCategoryStore = defineStore('categoryStore', ()=>{
+export const useCategoryStore = defineStore('categoryStore', () => {
   const categories = ref<Category[]>([])
   const loading = ref<boolean>(false) // attend on une réponse de l'api
   const error = ref<string | null>(null) // ERREUR  ou pas ?
@@ -17,8 +17,8 @@ export  const useCategoryStore = defineStore('categoryStore', ()=>{
     try {
       const response = await categoryApi.getAll()
       categories.value = response.data
-    } catch(e) {
-      error.value = "Impossible de charger les catégories."
+    } catch (e) {
+      error.value = 'Impossible de charger les catégories.'
     } finally {
       loading.value = false // désactive le loader quoi qu'il arrive
     }
@@ -38,25 +38,21 @@ export  const useCategoryStore = defineStore('categoryStore', ()=>{
         error.value = Object.entries(djangoErrors)
           .map(([field, messages]) => `${field} : ${(messages as string[]).join(', ')}`)
           .join(' | ')
-        setTimeout(() => {
-          error.value = null
-        }, 3000)
       } else {
         error.value = 'Impossible de créer la catégorie.'
       }
     }
   }
 
-  async function update(id: number, data: Partial<CategoryCreate> ) {
-    try{
+  async function update(id: number, data: Partial<CategoryCreate>) {
+    try {
       const response = await categoryApi.update(id, data)
 
-      const index = categories.value.findIndex(category => category.id === id)
-      if(index !== -1) {
+      const index = categories.value.findIndex((category) => category.id === id)
+      if (index !== -1) {
         categories.value[index] = response.data
       }
-
-    } catch (e){
+    } catch (e) {
       error.value = 'Impossible de modifier la catégorie'
     }
   }
@@ -65,13 +61,13 @@ export  const useCategoryStore = defineStore('categoryStore', ()=>{
     try {
       await categoryApi.delete(id)
       //retourne un nouvea tableau sans l'lément supprimé
-      categories.value = categories.value.filter(category => category.id !== id)
+      categories.value = categories.value.filter((category) => category.id !== id)
     } catch (e) {
       error.value = 'Impossible de supprimer la catégorie'
     }
   }
 
-  function clearError(){
+  function clearError() {
     error.value = null
   }
 

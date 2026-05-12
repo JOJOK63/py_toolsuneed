@@ -1,17 +1,21 @@
+<!-- CategoryView.vue -->
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useCategoryStore } from '@/stores/budget/categoryStore'
 import CategoryTable from './CategoryTable.vue'
 import CategoryForm from './CategoryForm.vue'
 import type { CategoryCreate } from '@/api/modules/budget/category'
+import CancelBtn from '@/components/shared/Btn/CancelBtn.vue'
 
 const store = useCategoryStore()
+const modalOpen = ref(false)
 
 onMounted(() => store.fetchAll())
 
-// Ces fonctions reçoivent les événements des enfants et appellent le store
 async function handleCreate(data: CategoryCreate) {
   await store.create(data)
+  // Ferme la modale seulement si pas d'erreur
+  if (!store.error) modalOpen.value = false
 }
 
 async function handleUpdate(id: number, data: Partial<CategoryCreate>) {
@@ -29,21 +33,31 @@ async function handleDelete(id: number) {
 
     <div v-if="store.loading">Chargement...</div>
 
-    <div v-if="store.error" class="alert alert-error">
+    <!-- Erreur de chargement uniquement -->
+    <div v-if="store.error && !modalOpen" class="alert alert-error">
       <span>{{ store.error }}</span>
       <button class="btn btn-sm btn-ghost" @click="store.clearError()">✕</button>
     </div>
 
-    <!-- On passe les données via :categories (prop) -->
-    <!-- On écoute les événements via @delete, @update (emits) -->
     <CategoryTable
       v-if="!store.loading"
       :categories="store.categories"
       @delete="handleDelete"
       @update="handleUpdate"
+      @open-modal="modalOpen = true"
     />
 
-    <!-- CategoryForm remonte @submit avec les données -->
-    <CategoryForm @submit="handleCreate" />
+    <!-- MODALE -->
+    <dialog :open="modalOpen" class="modal">
+      <div class="modal-box">
+        <CategoryForm :error="store.error" @submit="handleCreate" />
+        <CancelBtn @click="modalOpen = false" />
+      </div>
+      <form
+        method="dialog"
+        class="modal-backdrop"
+        @click="((modalOpen = false), store.clearError())"
+      ></form>
+    </dialog>
   </div>
 </template>
