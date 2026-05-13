@@ -9,7 +9,7 @@ CURRENCY_CHOICES = [
 
 # Les choix possibles pour le type de transaction
 TRANSACTION_TYPE = [
-    ("EXP", "Expense"),  # ⚠️ Corrigé : "TRANSFER" a 8 lettres, ton max_length=4 était trop court
+    ("EXP", "Expense"),
     ("INC", "Income"),
     ("TRSF", "Transfer"),
 ]

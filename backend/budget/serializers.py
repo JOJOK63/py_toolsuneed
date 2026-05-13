@@ -1,10 +1,11 @@
 from rest_framework import serializers
 
-from budget.models import Category, Budget
+from budget.models import Category, Budget, FinancialTransaction
 from budget.models import Subcategory
 
 
 class CategorySerializer(serializers.ModelSerializer[Category]):
+    # For DRF Spectacular files add
     icon = serializers.ImageField(
         required=True,
         allow_null=False,
@@ -18,6 +19,7 @@ class CategorySerializer(serializers.ModelSerializer[Category]):
 
 
 class SubcategorySerializer(serializers.ModelSerializer[Subcategory]):
+    # For DRF Spectacular files add
     icon = serializers.ImageField(
         required=True,
         allow_null=False,
@@ -39,3 +41,16 @@ class BudgetSerializer(serializers.ModelSerializer[Budget]):
         model = Budget
         fields = '__all__'
         read_only_fields = ('id', 'user')
+
+
+class FinancialTransactionSerializer(serializers.ModelSerializer[FinancialTransaction]):
+    # For DRF Spectacular dropdown
+    subcategory_detail: SubcategorySerializer = SubcategorySerializer(
+        source='subcategory',
+        read_only=True
+    )
+
+    class Meta:
+        model = FinancialTransaction
+        fields = '__all__'
+        read_only_fields = ('id', 'created_at', 'updated_at')
