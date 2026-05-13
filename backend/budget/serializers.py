@@ -52,5 +52,9 @@ class FinancialTransactionSerializer(serializers.ModelSerializer[FinancialTransa
 
     class Meta:
         model = FinancialTransaction
-        fields = '__all__'
+        fields = [
+            'id', 'name', 'amount', 'detail', 'transaction_type',
+            'created_at', 'updated_at', 'budget', 'subcategory',
+            'subcategory_detail'
+        ]
         read_only_fields = ('id', 'created_at', 'updated_at')
