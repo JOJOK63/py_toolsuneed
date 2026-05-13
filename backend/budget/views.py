@@ -2,7 +2,7 @@ from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import generics
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.serializers import BaseSerializer
@@ -40,6 +40,16 @@ class CategoryRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 # SUBCATEGORY //////////////
 @extend_schema(tags=["Budget / Subcategory"])
+@extend_schema(
+    tags=["Budget / Subcategory"],
+    parameters=[
+        OpenApiParameter(
+            name='category',
+            type=int,
+            description='Filtre par catégorie (id)',
+        )
+    ]
+)
 class SubcategoryListCreateView(generics.ListCreateAPIView):
     serializer_class = SubcategorySerializer
     parser_classes = [MultiPartParser, FormParser, JSONParser]
@@ -81,8 +91,8 @@ class BudgetListCreateView(generics.ListCreateAPIView):
             serializer.save(user=user)
         else:
             # Temporaire — admin par défaut sans auth
-            admin = User.objects.get(username='admin')
-            serializer.save(user=admin)
+            default_user = User.objects.get(username='admin')
+            serializer.save(user=default_user)
 
 
 @extend_schema(tags=["Budget / Budget"])
@@ -93,8 +103,18 @@ class BudgetRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 
 # FINANCIAL TRANSACTION ///
+# @extend_schema use to groupe by model on swagger api
+# OpenApiParameter use to understand what param endpoint need because swagger d'ont reed python
 @extend_schema(
-    tags=["Budget / Financial Transaction"]
+    tags=["Budget / Financial Transaction"],
+    parameters=[
+        OpenApiParameter(
+            name='budget',
+            type=int,
+            description='Filtre par budget (id) — obligatoire',
+            required=True,
+        )
+    ]
 )
 class FinancialTransactionListCreateView(generics.ListCreateAPIView):
     serializer_class = FinancialTransactionSerializer
@@ -111,3 +131,21 @@ class FinancialTransactionRetrieveUpdateDestroyView(generics.RetrieveUpdateDestr
     queryset = FinancialTransaction.objects.all()
     serializer_class = FinancialTransactionSerializer
     lookup_field = 'id'
+
+# update system
+maj() {
+    sudo apt update
+    sudo apt upgrade -y
+}
+
+# navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# projects
+alias atlas='cd /var/www/atlas'
+alias iot='cd /var/www/iot-telephony-toolkit'
+alias tun='cd /home/jordankraria/Documents/py_toolsUneed'
+alias bashrc='nano ~/.bashrc'
