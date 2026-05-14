@@ -9,7 +9,7 @@ CURRENCY_CHOICES = [
 
 # Les choix possibles pour le type de transaction
 TRANSACTION_TYPE = [
-    ("EXP", "Expense"),  # ⚠️ Corrigé : "TRANSFER" a 8 lettres, ton max_length=4 était trop court
+    ("EXP", "Expense"),
     ("INC", "Income"),
     ("TRSF", "Transfer"),
 ]
@@ -17,9 +17,17 @@ TRANSACTION_TYPE = [
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    color = models.CharField(max_length=7)
-    icon = models.ImageField(upload_to="categories/icons/", blank=True, null=True)
+    color = models.CharField(max_length=7, unique=True)
+    icon = models.ImageField(upload_to="categories/icons/", blank=False, null=False)
     is_active = models.BooleanField(default=True)
+
+    def __str__(self) -> str:
+        return self.name
+
+class Subcategory(models.Model):
+    name = models.CharField(max_length=255)
+    icon = models.ImageField(upload_to="subcategories/icons/", blank=False, null=False)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)  # catégorie obligatoire ✅
 
     def __str__(self) -> str:
         return self.name
@@ -39,14 +47,6 @@ class Budget(models.Model):
         return self.name
 
 
-class SubCategory(models.Model):
-    name = models.CharField(max_length=255)
-    icon = models.URLField(blank=True)
-
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)  # catégorie obligatoire ✅
-
-    def __str__(self) -> str:
-        return self.name
 
 
 class FinancialTransaction(models.Model):
@@ -58,7 +58,7 @@ class FinancialTransaction(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE)
-    subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True, blank=True)  # nullable ✅
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True, blank=True)  # nullable ✅
 
     class Meta:
         db_table = "budget_financial_transaction"
