@@ -1,11 +1,11 @@
 import api from '../../index.ts'
 
-export interface Category{
-  id:number
-  name:string
-  color:string
-  icon:string
-  is_active:boolean
+export interface Category {
+  id: number
+  name: string
+  color: string
+  icon: string
+  is_active: boolean
 }
 
 // Omit<Category, 'id' | 'is_active'> = "Category mais sans id et sans is_active" pour la creation
@@ -17,7 +17,7 @@ export type CategoryCreate = {
   is_active?: boolean
 }
 
-export const categoryApi = {
+export const fetchCategoryApi = {
   getAll() {
     return api.get<Category[]>('/budget/category/')
   },
