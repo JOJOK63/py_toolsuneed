@@ -4,4 +4,5 @@
   <main>
     <button class="btn btn-primary">Test DaisyUI</button>
   </main>
+  <RouterView />
 </template>

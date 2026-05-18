@@ -5,7 +5,7 @@ import CategoryTable from './CategoryTable.vue'
 import CategoryForm from './CategoryForm.vue'
 import type { CategoryCreate } from '@/api/modules/budget/category'
 import CancelBtn from '@/components/shared/Btn/CancelBtn.vue'
-import TableCrud from '@/components/shared/TableCrud.vue'
+import TableCrud from '@/components/shared/CrudEntityLayout /TableCrud.vue'
 
 const store = useCategoryStore()
 const modalOpen = ref(false)
