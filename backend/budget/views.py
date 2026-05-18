@@ -131,21 +131,3 @@ class FinancialTransactionRetrieveUpdateDestroyView(generics.RetrieveUpdateDestr
     queryset = FinancialTransaction.objects.all()
     serializer_class = FinancialTransactionSerializer
     lookup_field = 'id'
-
-# update system
-maj() {
-    sudo apt update
-    sudo apt upgrade -y
-}
-
-# navigation
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-
-# projects
-alias atlas='cd /var/www/atlas'
-alias iot='cd /var/www/iot-telephony-toolkit'
-alias tun='cd /home/jordankraria/Documents/py_toolsUneed'
-alias bashrc='nano ~/.bashrc'
