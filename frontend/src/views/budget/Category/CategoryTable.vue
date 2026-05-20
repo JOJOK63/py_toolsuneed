@@ -94,7 +94,12 @@ function handleDelete(id: number) {
           <template v-else>
             <td>
               <div class="mask mask-squircle h-10 w-10" :style="{ background: category.color }">
-                <img v-if="category.icon" :src="category.icon" class="h-10 w-10 p-1" />
+                <img
+                  v-if="category.icon"
+                  :src="category.icon"
+                  class="h-10 w-10 p-1"
+                  :alt="`icone de la ${category.name}`"
+                />
               </div>
             </td>
             <td class="font-bold">{{ category.name }}</td>
@@ -116,3 +121,5 @@ function handleDelete(id: number) {
     </table>
   </div>
 </template>
+
+<style scoped></style>
