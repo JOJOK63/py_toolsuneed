@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { type Category, categoryApi, type CategoryCreate } from '@/api/modules/budget/category.ts'
+import {
+  type Category,
+  fetchCategoryApi,
+  type CategoryCreate,
+} from '@/api/modules/budget/category.ts'
 import axios from 'axios'
 
 // defineStore('category', ...) → 'category' nom unique
@@ -15,7 +19,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
     loading.value = true
     error.value = null
     try {
-      const response = await categoryApi.getAll()
+      const response = await fetchCategoryApi.getAll()
       categories.value = response.data
     } catch (e) {
       error.value = 'Impossible de charger les catégories.'
@@ -26,7 +30,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
 
   async function create(data: CategoryCreate) {
     try {
-      const response = await categoryApi.create(data)
+      const response = await fetchCategoryApi.create(data)
       categories.value.push(response.data)
     } catch (e) {
       // axios met la réponse Django dans e.response.data
@@ -39,14 +43,15 @@ export const useCategoryStore = defineStore('categoryStore', () => {
           .map(([field, messages]) => `${field} : ${(messages as string[]).join(', ')}`)
           .join(' | ')
       } else {
-        error.value = 'Impossible de créer la catégorie.'
+        error.value = `Impossible de créer la catégorie.`
       }
     }
   }
 
+  // Partial<> de mettre tous les attributs en optionnel et donc de faire un put ou un patch sans soucis
   async function update(id: number, data: Partial<CategoryCreate>) {
     try {
-      const response = await categoryApi.update(id, data)
+      const response = await fetchCategoryApi.update(id, data)
 
       const index = categories.value.findIndex((category) => category.id === id)
       if (index !== -1) {
@@ -59,7 +64,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
 
   async function remove(id: number) {
     try {
-      await categoryApi.delete(id)
+      await fetchCategoryApi.delete(id)
       //retourne un nouvea tableau sans l'lément supprimé
       categories.value = categories.value.filter((category) => category.id !== id)
     } catch (e) {

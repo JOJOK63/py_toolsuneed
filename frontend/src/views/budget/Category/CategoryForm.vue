@@ -41,6 +41,7 @@ function handleIconChange(event: Event) {
 }
 
 function handleSubmit() {
+  //  si champ vide on sort on ne fait même ^pas la suite
   if (!newName.value.trim()) return
   emit('submit', { name: newName.value, color: newColor.value, icon: newIcon.value })
   newName.value = ''

@@ -59,6 +59,9 @@ const currentApp = computed(() => {
                 <li>
                   <RouterLink to="/budget" @click="closeMenu"> Budget </RouterLink>
                 </li>
+                <li>
+                  <RouterLink to="/test" @click="closeMenu"> Test </RouterLink>
+                </li>
               </template>
 
               <!-- Menu BUDGET -->

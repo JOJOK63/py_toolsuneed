@@ -171,7 +171,11 @@ SPECTACULAR_SETTINGS = {
     'COMPONENT_SPLIT_REQUEST': True,  # ← IMPORTANT
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # port Vite par défaut
-]
+# TODO attention en production à ne jamais mettre
+CORS_ALLOW_ALL_ORIGINS = True # uniquement en dev
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",  # port Vite par défaut
+#     "http://172.22.0.2:5173"  # pour docker
+# ]
 
