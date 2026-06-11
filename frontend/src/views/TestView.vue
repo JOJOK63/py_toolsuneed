@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import ChildTest from '@/views/ChildTest.vue'
-import CancelBtn from '@/components/shared/Btn/CancelBtn.vue'
+import { ref } from 'vue'
 
-function coucou() {
+const name = ref<string>('jhon')
+
+function danger() {
   alert('test')
 }
 </script>
@@ -22,6 +24,10 @@ function coucou() {
       <em>This is the footer</em>
     </template>
   </ChildTest>
+
+  <input type="text" v-model="name" />
+  <button @click.prevent="danger()">ok</button>
+  <p>{{ name }}</p>
 </template>
 
 <style scoped></style>

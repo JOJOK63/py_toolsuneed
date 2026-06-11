@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { SubcategoryCreate } from '@/api/modules/budget/subcategory'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import CreateBtn from '@/components/shared/Btn/CreateBtn.vue'
+import type { Category } from '@/api/modules/budget/category.ts'
 
 const emit = defineEmits<{
   submit: [data: SubcategoryCreate]
@@ -9,12 +10,30 @@ const emit = defineEmits<{
 
 const newName = ref('')
 const newIcon = ref<File | null>(null)
+const category = ref('category')
+
+// TODO a regarder plus en détail pour comprendre et axtiver
+// Avec computed — se recalcule automatiquement quand selectedId change
+// const filteredSubcategories = computed(() =>
+//   store.subcategories.filter((s) => s.category === selectedId.value),
+// )
+
+function handleIconChange(event: Event) {
+  const input = event.target as HTMLInputElement
+  newIcon.value = input.files?.[0] ?? null
+}
 
 function handleSubmit() {
   if (!newName.value.trim()) return
-  emit('submit', { name: newName.value, icon: newIcon.value })
+  emit('submit', {
+    name: newName.value,
+    icon: newIcon.value,
+    // todo injecter liste de cateegorie pour assigner la bonne
+    category: 0,
+  })
   newName.value = ''
   newIcon.value = null
+  category.value = ''
 }
 </script>
 
@@ -31,8 +50,8 @@ function handleSubmit() {
         required
       />
       <label class="label">Icône</label>
-      <input type="file" accept="image/*" class="file-input" />
-      <CreateBtn />
+      <input type="file" accept="image/*" class="file-input" @change="handleIconChange" />
+      <CreateBtn @click="handleSubmit()" />
     </fieldset>
   </form>
 </template>
