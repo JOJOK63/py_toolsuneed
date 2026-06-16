@@ -1,4 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps({
+  title: String,
+  img: String,
+  detail: String,
+})
+</script>
 
 <template>
   <div class="card bg-base-100 w-96 shadow-sm">

@@ -6,9 +6,11 @@ import CancelBtn from '@/components/shared/Btn/CancelBtn.vue'
 import DeleteBtn from '@/components/shared/Btn/DeleteBtn.vue'
 import EditBtn from '@/components/shared/Btn/EditBtn.vue'
 import AddBtn from '@/components/shared/Btn/AddBtn.vue'
+import type { Category } from '@/api/modules/budget/category.ts'
 
 const props = defineProps<{
   subcategories: Subcategory[]
+  categories: Category[]
 }>()
 
 const emit = defineEmits<{

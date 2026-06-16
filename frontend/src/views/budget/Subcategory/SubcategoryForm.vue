@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import type { SubcategoryCreate } from '@/api/modules/budget/subcategory'
-import { computed, ref } from 'vue'
+import type { Category } from '@/api/modules/budget/category'
+import { ref } from 'vue'
 import CreateBtn from '@/components/shared/Btn/CreateBtn.vue'
-import type { Category } from '@/api/modules/budget/category.ts'
+
+const props = defineProps({
+  categories : Category[]
+})
 
 const emit = defineEmits<{
   submit: [data: SubcategoryCreate]
@@ -51,6 +55,13 @@ function handleSubmit() {
       />
       <label class="label">Icône</label>
       <input type="file" accept="image/*" class="file-input" @change="handleIconChange" />
+      <label class="label">Catégorie</label>
+      <select class="select">
+        <option disabled selected>Category</option>
+        <option v-for="category in props.categories" :key="category.id" :value="category.id">
+          {{ category.name }}
+        </option>
+      </select>
       <CreateBtn @click="handleSubmit()" />
     </fieldset>
   </form>
