@@ -10,11 +10,10 @@ import { useCategoryStore } from '@/stores/budget/categoryStore.ts'
 const store = useSubcategoryStore()
 const storeCategory = useCategoryStore()
 const modalOpen = ref(false)
-const categories = ref()
 
 onMounted(() => {
   store.fetchAll()
-  categories.value = storeCategory.fetchAll()
+  storeCategory.fetchAll()
 })
 
 async function handleCreate(data: SubcategoryCreate) {
@@ -33,12 +32,6 @@ async function handleDelete(id: number) {
 
     <div v-if="store.loading">Chargement...</div>
 
-    <!-- Erreur de chargement uniquement -->
-    <div v-if="store.error" class="alert alert-error">
-      <span>{{ store.error }}</span>
-      <button class="btn btn-sm btn-ghost" @click="store.clearError()">✕</button>
-    </div>
-
     <SubcategoryTable
       v-if="!store.loading"
       :subcategories="store.subcategories"
@@ -51,9 +44,9 @@ async function handleDelete(id: number) {
     <dialog :open="modalOpen" class="modal">
       <div class="modal-box">
         <SubcategoryForm
-          :error="store.error"
           @submit="handleCreate"
           :categories="storeCategory.categories"
+          :openModal="modalOpen"
         />
         <CancelBtn @click="modalOpen = false" />
       </div>

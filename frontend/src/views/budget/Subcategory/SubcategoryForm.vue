@@ -4,9 +4,10 @@ import type { Category } from '@/api/modules/budget/category'
 import { ref } from 'vue'
 import CreateBtn from '@/components/shared/Btn/CreateBtn.vue'
 
-const props = defineProps({
-  categories : Category[]
-})
+const props = defineProps<{
+  categories: Category[]
+  openModal: boolean
+}>()
 
 const emit = defineEmits<{
   submit: [data: SubcategoryCreate]
@@ -15,12 +16,8 @@ const emit = defineEmits<{
 const newName = ref('')
 const newIcon = ref<File | null>(null)
 const category = ref('category')
-
-// TODO a regarder plus en détail pour comprendre et axtiver
-// Avec computed — se recalcule automatiquement quand selectedId change
-// const filteredSubcategories = computed(() =>
-//   store.subcategories.filter((s) => s.category === selectedId.value),
-// )
+const selectedCategoryId = ref<number | null>(null)
+const fileInput = ref<HTMLInputElement | null>(null)
 
 function handleIconChange(event: Event) {
   const input = event.target as HTMLInputElement
@@ -28,16 +25,22 @@ function handleIconChange(event: Event) {
 }
 
 function handleSubmit() {
-  if (!newName.value.trim()) return
-  emit('submit', {
-    name: newName.value,
-    icon: newIcon.value,
-    // todo injecter liste de cateegorie pour assigner la bonne
-    category: 0,
-  })
-  newName.value = ''
-  newIcon.value = null
-  category.value = ''
+  if (newName.value.trim() && newIcon.value && selectedCategoryId.value) {
+    emit('submit', {
+      name: newName.value,
+      icon: newIcon.value,
+      category: selectedCategoryId.value,
+    })
+    newName.value = ''
+    newIcon.value = null
+    category.value = ''
+
+    if (fileInput.value) {
+      fileInput.value.value = ''
+    }
+
+    !props.openModal
+  }
 }
 </script>
 
@@ -54,10 +57,17 @@ function handleSubmit() {
         required
       />
       <label class="label">Icône</label>
-      <input type="file" accept="image/*" class="file-input" @change="handleIconChange" />
+      <input
+        type="file"
+        ref="fileInput"
+        accept="image/*"
+        class="file-input"
+        @change="handleIconChange"
+        required
+      />
       <label class="label">Catégorie</label>
-      <select class="select">
-        <option disabled selected>Category</option>
+      <select v-model="selectedCategoryId" class="select" required>
+        <option disabled :value="null">Choisir une catégorie</option>
         <option v-for="category in props.categories" :key="category.id" :value="category.id">
           {{ category.name }}
         </option>

@@ -12,7 +12,7 @@ export interface Subcategory {
 export type SubcategoryCreate = {
   name: string
   icon: File | null
-  category: number
+  category: number | null
 }
 
 export const fetchSubcategoryApi = {
