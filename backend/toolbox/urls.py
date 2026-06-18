@@ -23,11 +23,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', index, name="index"),
+    path('admin/', admin.site.urls),
     path('budget/', include("budget.urls")),
     path('devise/', include("currency.urls")),
     path('todolist/', include("todolist.urls")),
-    path('admin/', admin.site.urls),
 
+    #API
+    path('api/', include('auth_app.urls')),
     # API schema
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # Swagger UI
