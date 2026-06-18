@@ -3,6 +3,7 @@ import ThemeSelectorC from '@/components/shared/Navbar/ThemeSelectorC.vue'
 import { useRoute } from 'vue-router'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import NavbarBudget from '@/components/budget/NavbarBudget.vue'
+import NavbarTodolist from '@/components/todolist/NavbarTodolist.vue'
 
 const route = useRoute()
 const menuOpen = ref(false)
@@ -31,6 +32,9 @@ onUnmounted(() => {
 // can change and make an adaptive bar, just add route path here
 const currentApp = computed(() => {
   if (route.path.startsWith('/budget')) return 'budget'
+
+  if (route.path.startsWith('/todolist')) return 'todolist'
+
   return 'home'
 })
 </script>
@@ -46,7 +50,11 @@ const currentApp = computed(() => {
         <li>
           <details :open="menuOpen" @toggle="menuOpen = ($event.target as HTMLDetailsElement).open">
             <!-- Le titre du menu change selon l'app -->
-            <summary>{{ currentApp === 'budget' ? 'Budget' : 'Menu' }}</summary>
+            <summary>
+              {{
+                currentApp === 'budget' ? 'Budget' : currentApp === 'todolist' ? 'Todolist' : 'Menu'
+              }}
+            </summary>
 
             <ul class="p-2 bg-base-100 w-40 z-1">
               <!-- Menu HOME -->
@@ -62,11 +70,18 @@ const currentApp = computed(() => {
                 <li>
                   <RouterLink to="/test" @click="closeMenu"> Test </RouterLink>
                 </li>
+                <li>
+                  <RouterLink to="/todolist" @click="closeMenu"> Todolist </RouterLink>
+                </li>
               </template>
 
               <!-- Menu BUDGET -->
               <template v-else-if="currentApp === 'budget'">
                 <NavbarBudget :on-close="closeMenu" />
+              </template>
+
+              <template v-else-if="currentApp === 'todolist'">
+                <NavbarTodolist :on-close="closeMenu" />
               </template>
             </ul>
           </details>

@@ -3,9 +3,6 @@ import GenericCardDetail from '@/components/shared/CrudEntityLayout /GenericCard
 </script>
 
 <template>
-  <main>
-    <button class="btn btn-primary">Test DaisyUI</button>
-  </main>
   <GenericCardDetail></GenericCardDetail>
   <RouterView />
 </template>

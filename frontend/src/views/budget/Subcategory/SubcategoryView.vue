@@ -5,15 +5,28 @@ import SubcategoryTable from '@/views/budget/Subcategory/SubcategoryTable.vue'
 import CancelBtn from '@/components/shared/Btn/CancelBtn.vue'
 import type { SubcategoryCreate } from '@/api/modules/budget/subcategory.ts'
 import SubcategoryForm from '@/views/budget/Subcategory/SubcategoryForm.vue'
+import { useCategoryStore } from '@/stores/budget/categoryStore.ts'
 
 const store = useSubcategoryStore()
+const storeCategory = useCategoryStore()
 const modalOpen = ref(false)
 
-onMounted(() => store.fetchAll())
+onMounted(() => {
+  store.fetchAll()
+  storeCategory.fetchAll()
+})
 
 async function handleCreate(data: SubcategoryCreate) {
   await store.create(data)
   if (!store.error) modalOpen.value = false
+}
+
+async function handleUpdate(id: number, data: Partial<SubcategoryCreate>) {
+  await store.update(id, data)
+}
+
+async function handleDelete(id: number) {
+  await store.remove(id)
 }
 </script>
 
@@ -23,22 +36,23 @@ async function handleCreate(data: SubcategoryCreate) {
 
     <div v-if="store.loading">Chargement...</div>
 
-    <!-- Erreur de chargement uniquement -->
-    <div v-if="store.error" class="alert alert-error">
-      <span>{{ store.error }}</span>
-      <button class="btn btn-sm btn-ghost" @click="store.clearError()">✕</button>
-    </div>
-
     <SubcategoryTable
       v-if="!store.loading"
       :subcategories="store.subcategories"
+      :categories="storeCategory.categories"
+      @delete="handleDelete"
+      @update="handleUpdate"
       @open-modal="modalOpen = true"
     />
 
     <!-- MODALE -->
     <dialog :open="modalOpen" class="modal">
       <div class="modal-box">
-        <SubcategoryForm :error="store.error" @submit="handleCreate" />
+        <SubcategoryForm
+          :error="store.error"
+          @submit="handleCreate"
+          :categories="storeCategory.categories"
+        />
         <CancelBtn @click="modalOpen = false" />
       </div>
       <form
