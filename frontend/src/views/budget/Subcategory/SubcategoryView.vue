@@ -21,6 +21,10 @@ async function handleCreate(data: SubcategoryCreate) {
   if (!store.error) modalOpen.value = false
 }
 
+async function handleUpdate(id: number, data: Partial<SubcategoryCreate>) {
+  await store.update(id, data)
+}
+
 async function handleDelete(id: number) {
   await store.remove(id)
 }
@@ -37,6 +41,7 @@ async function handleDelete(id: number) {
       :subcategories="store.subcategories"
       :categories="storeCategory.categories"
       @delete="handleDelete"
+      @update="handleUpdate"
       @open-modal="modalOpen = true"
     />
 
@@ -44,9 +49,9 @@ async function handleDelete(id: number) {
     <dialog :open="modalOpen" class="modal">
       <div class="modal-box">
         <SubcategoryForm
+          :error="store.error"
           @submit="handleCreate"
           :categories="storeCategory.categories"
-          :openModal="modalOpen"
         />
         <CancelBtn @click="modalOpen = false" />
       </div>

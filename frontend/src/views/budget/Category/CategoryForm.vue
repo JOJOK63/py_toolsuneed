@@ -3,19 +3,21 @@ import { ref, watch } from 'vue'
 import type { CategoryCreate } from '@/api/modules/budget/category'
 import CreateBtn from '@/components/shared/Btn/CreateBtn.vue'
 
-const emit = defineEmits<{
-  submit: [data: CategoryCreate]
-}>()
-
-// Reçoit l'erreur du parent
 const props = defineProps<{
   error?: string | null
 }>()
 
-// Toast local
+const emit = defineEmits<{
+  submit: [data: CategoryCreate]
+}>()
+
+const newName = ref('')
+const newColor = ref('#000000')
+const newIcon = ref<File | null>(null)
+const fileInput = ref<HTMLInputElement | null>(null)
+
 const showToast = ref(false)
 
-// Quand l'erreur change → affiche le toast
 watch(
   () => props.error,
   (newError) => {
@@ -31,10 +33,6 @@ watch(
   },
 )
 
-const newName = ref('')
-const newColor = ref('#000000')
-const newIcon = ref<File | null>(null)
-
 function handleIconChange(event: Event) {
   const input = event.target as HTMLInputElement
   newIcon.value = input.files?.[0] ?? null
@@ -43,10 +41,16 @@ function handleIconChange(event: Event) {
 function handleSubmit() {
   //  si champ vide on sort on ne fait même ^pas la suite
   if (!newName.value.trim()) return
+  if (!newColor.value) return
+  if (!newIcon.value) return
   emit('submit', { name: newName.value, color: newColor.value, icon: newIcon.value })
   newName.value = ''
   newColor.value = '#000000'
   newIcon.value = null
+
+  if (fileInput.value) {
+    fileInput.value.value = ''
+  }
 }
 </script>
 
@@ -65,8 +69,15 @@ function handleSubmit() {
       <label class="label">Couleur</label>
       <input v-model="newColor" type="color" class="h-12 w-16 cursor-pointer rounded border" />
       <label class="label">Icône</label>
-      <input type="file" accept="image/*" class="file-input" @change="handleIconChange" />
-      <CreateBtn @click="handleSubmit" />
+      <input
+        type="file"
+        ref="fileInput"
+        accept="image/*"
+        class="file-input"
+        @change="handleIconChange"
+        required
+      />
+      <CreateBtn />
     </fieldset>
   </form>
 

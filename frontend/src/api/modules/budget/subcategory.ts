@@ -40,10 +40,10 @@ export const fetchSubcategoryApi = {
     if (data.name) formData.append('name', data.name)
     if (data.icon) formData.append('icon', data.icon)
     if (data.category) formData.append('category', String(data.category))
-    return api.patch<Subcategory>(`budget/subcategory/${id}/`, formData)
+    return api.patch<Subcategory>(`/budget/subcategory/${id}/`, formData)
   },
 
   delete(id: number) {
-    return api.delete(`budget/subcategory/${id}/`)
+    return api.delete(`/budget/subcategory/${id}/`)
   },
 }

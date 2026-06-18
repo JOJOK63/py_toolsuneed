@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { SubcategoryCreate } from '@/api/modules/budget/subcategory'
 import type { Category } from '@/api/modules/budget/category'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import CreateBtn from '@/components/shared/Btn/CreateBtn.vue'
 
 const props = defineProps<{
   categories: Category[]
-  openModal: boolean
+  error?: string | null
 }>()
 
 const emit = defineEmits<{
@@ -15,31 +15,47 @@ const emit = defineEmits<{
 
 const newName = ref('')
 const newIcon = ref<File | null>(null)
-const category = ref('category')
 const selectedCategoryId = ref<number | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
 
+// Toast local
+const showToast = ref(false)
+
+// Quand l'erreur change → affiche le toast
+watch(
+  () => props.error,
+  (newError) => {
+    if (newError) {
+      showToast.value = true
+      setTimeout(() => {
+        showToast.value = false
+      }, 3000)
+    } else {
+      // Si l'erreur est effacée → cache le toast immédiatement
+      showToast.value = false
+    }
+  },
+)
 function handleIconChange(event: Event) {
   const input = event.target as HTMLInputElement
   newIcon.value = input.files?.[0] ?? null
 }
 
 function handleSubmit() {
-  if (newName.value.trim() && newIcon.value && selectedCategoryId.value) {
-    emit('submit', {
-      name: newName.value,
-      icon: newIcon.value,
-      category: selectedCategoryId.value,
-    })
-    newName.value = ''
-    newIcon.value = null
-    category.value = ''
+  if (!newName.value.trim()) return
+  if (!newIcon.value) return
+  if (!selectedCategoryId.value) return
+  emit('submit', {
+    name: newName.value,
+    icon: newIcon.value,
+    category: selectedCategoryId.value,
+  })
+  newName.value = ''
+  newIcon.value = null
+  selectedCategoryId.value = null // tu avais oublié de reset celui-là aussi
 
-    if (fileInput.value) {
-      fileInput.value.value = ''
-    }
-
-    !props.openModal
+  if (fileInput.value) {
+    fileInput.value.value = ''
   }
 }
 </script>
@@ -67,14 +83,21 @@ function handleSubmit() {
       />
       <label class="label">Catégorie</label>
       <select v-model="selectedCategoryId" class="select" required>
-        <option disabled :value="null">Choisir une catégorie</option>
+        <option disabled>Choisir une catégorie</option>
         <option v-for="category in props.categories" :key="category.id" :value="category.id">
           {{ category.name }}
         </option>
       </select>
-      <CreateBtn @click="handleSubmit()" />
+      <CreateBtn />
     </fieldset>
   </form>
+
+  <!-- Toast — positionné en bas à droite, disparaît après 3s -->
+  <div class="toast toast-end toast-bottom z-50">
+    <div v-if="showToast" class="alert alert-error">
+      <span>{{ props.error }}</span>
+    </div>
+  </div>
 </template>
 
 <style scoped></style>
