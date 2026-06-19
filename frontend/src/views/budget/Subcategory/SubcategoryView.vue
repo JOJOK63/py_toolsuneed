@@ -33,7 +33,6 @@ async function handleDelete(id: number) {
 <template>
   <div class="p-6 flex flex-col items-center gap-6">
     <h1 class="text-2xl font-bold">Sous catégories</h1>
-
     <div v-if="store.loading">Chargement...</div>
 
     <SubcategoryTable

@@ -7,6 +7,8 @@ import DeleteBtn from '@/components/shared/Btn/DeleteBtn.vue'
 import EditBtn from '@/components/shared/Btn/EditBtn.vue'
 import AddBtn from '@/components/shared/Btn/AddBtn.vue'
 import type { Category } from '@/api/modules/budget/category.ts'
+import { computed } from 'vue'
+import ToggleBtn from '@/components/shared/Btn/ToggleBtn.vue'
 
 const props = defineProps<{
   subcategories: Subcategory[]
@@ -23,6 +25,20 @@ const editingId = ref<number | null>(null)
 const editingName = ref('')
 const editingIcon = ref<File | null>(null)
 const editingCategory = ref<number | null>(null)
+const isFilterActive = ref(false)
+const filteredSubcategory = computed(() => {
+  const result = [...props.subcategories]
+
+  if (!isFilterActive.value) {
+    result.sort((a, b) => {
+      const nameA = a.category_detail?.name || ''
+      const nameB = b.category_detail?.name || ''
+      return nameA.localeCompare(nameB)
+    })
+  }
+
+  return result
+})
 
 function handleEditIconChange(event: Event) {
   const input = event.target as HTMLInputElement
@@ -71,12 +87,13 @@ function handleDelete(id: number) {
           <th class="flex items-center gap-3">
             <p>Actions</p>
             <AddBtn @click="emit('openModal')" />
+            <ToggleBtn label="filtrer par catégories" v-model:state="isFilterActive"></ToggleBtn>
           </th>
         </tr>
       </thead>
       <tbody>
         <!-- props.categories ou juste categories — les deux fonctionnent -->
-        <tr v-for="subcategory in props.subcategories" :key="subcategory.id">
+        <tr v-for="subcategory in filteredSubcategory" :key="subcategory.id">
           <template v-if="editingId === subcategory.id">
             <td><input type="file" accept="image/*" @change="handleEditIconChange" /></td>
             <td><input v-model="editingName" class="input input-bordered input-sm" /></td>
