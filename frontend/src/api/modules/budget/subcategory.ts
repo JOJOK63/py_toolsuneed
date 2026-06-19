@@ -1,6 +1,5 @@
 import type { Category } from './category.ts'
 import api from '@/api'
-main
 
 export interface Subcategory {
   id: number
