@@ -7,8 +7,8 @@ const state = defineModel<boolean>('state', { default: false })
 </script>
 
 <template>
-  <div class="flex gap-2 p-2">
-    <p>{{ label }}</p>
+  <label class="flex gap-2 p-2">
+    <span>{{ label }}</span>
     <label class="toggle text-base-content">
       <input type="checkbox" v-model="state" />
       <svg aria-label="enabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -36,7 +36,7 @@ const state = defineModel<boolean>('state', { default: false })
         <path d="m6 6 12 12" />
       </svg>
     </label>
-  </div>
+  </label>
 </template>
 
 <style scoped></style>

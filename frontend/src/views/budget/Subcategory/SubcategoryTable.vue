@@ -8,7 +8,6 @@ import EditBtn from '@/components/shared/Btn/EditBtn.vue'
 import AddBtn from '@/components/shared/Btn/AddBtn.vue'
 import type { Category } from '@/api/modules/budget/category.ts'
 import { computed } from 'vue'
-import ToggleBtn from '@/components/shared/Btn/ToggleBtn.vue'
 
 const props = defineProps<{
   subcategories: Subcategory[]
@@ -87,7 +86,6 @@ function handleDelete(id: number) {
           <th class="flex items-center gap-3">
             <p>Actions</p>
             <AddBtn @click="emit('openModal')" />
-            <ToggleBtn label="filtrer par catégories" v-model:state="isFilterActive"></ToggleBtn>
           </th>
         </tr>
       </thead>

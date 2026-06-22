@@ -4,9 +4,12 @@ import { useRoute } from 'vue-router'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import NavbarBudget from '@/components/budget/NavbarBudget.vue'
 import NavbarTodolist from '@/components/todolist/NavbarTodolist.vue'
+import FilterBar from '@/components/shared/Bar/FilterBar.vue'
+import ToggleBtn from '@/components/shared/Btn/ToggleBtn.vue'
 
 const route = useRoute()
 const menuOpen = ref(false)
+const filterBarDisplay = ref(false)
 
 function closeMenu() {
   menuOpen.value = false
@@ -40,58 +43,67 @@ const currentApp = computed(() => {
 </script>
 
 <template>
-  <div class="navbar bg-base-100 shadow-sm" @click="handleClickOutside">
-    <div class="flex">
+  <div class="navbar bg-base-100 shadow-sm justify-between" @click="handleClickOutside">
+    <div class="flex navbar-start">
       <RouterLink to="/" class="btn btn-ghost text-xl">ToolsUneed</RouterLink>
+      <div class="">
+        <ul class="menu menu-horizontal px-1">
+          <li>
+            <details
+              :open="menuOpen"
+              @toggle="menuOpen = ($event.target as HTMLDetailsElement).open"
+            >
+              <!-- Le titre du menu change selon l'app -->
+              <summary>
+                {{
+                  currentApp === 'budget'
+                    ? 'Budget'
+                    : currentApp === 'todolist'
+                      ? 'Todolist'
+                      : 'Menu'
+                }}
+              </summary>
+
+              <ul class="p-2 bg-base-100 w-40 z-1">
+                <!-- Menu HOME -->
+                <template v-if="currentApp === 'home'">
+                  <li>
+                    <RouterLink to="/" @click="closeMenu" :class="{ active: route.path === '/' }">
+                      Accueil
+                    </RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="/budget" @click="closeMenu"> Budget </RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="/test" @click="closeMenu"> Test </RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="/todolist" @click="closeMenu"> Todolist </RouterLink>
+                  </li>
+                </template>
+
+                <!-- Menu BUDGET -->
+                <template v-else-if="currentApp === 'budget'">
+                  <NavbarBudget :on-close="closeMenu" />
+                </template>
+
+                <template v-else-if="currentApp === 'todolist'">
+                  <NavbarTodolist :on-close="closeMenu" />
+                </template>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <div class="navbar-center lg:flex flex-1">
-      <ul class="menu menu-horizontal px-1">
-        <li>
-          <details :open="menuOpen" @toggle="menuOpen = ($event.target as HTMLDetailsElement).open">
-            <!-- Le titre du menu change selon l'app -->
-            <summary>
-              {{
-                currentApp === 'budget' ? 'Budget' : currentApp === 'todolist' ? 'Todolist' : 'Menu'
-              }}
-            </summary>
-
-            <ul class="p-2 bg-base-100 w-40 z-1">
-              <!-- Menu HOME -->
-              <template v-if="currentApp === 'home'">
-                <li>
-                  <RouterLink to="/" @click="closeMenu" :class="{ active: route.path === '/' }">
-                    Accueil
-                  </RouterLink>
-                </li>
-                <li>
-                  <RouterLink to="/budget" @click="closeMenu"> Budget </RouterLink>
-                </li>
-                <li>
-                  <RouterLink to="/test" @click="closeMenu"> Test </RouterLink>
-                </li>
-                <li>
-                  <RouterLink to="/todolist" @click="closeMenu"> Todolist </RouterLink>
-                </li>
-              </template>
-
-              <!-- Menu BUDGET -->
-              <template v-else-if="currentApp === 'budget'">
-                <NavbarBudget :on-close="closeMenu" />
-              </template>
-
-              <template v-else-if="currentApp === 'todolist'">
-                <NavbarTodolist :on-close="closeMenu" />
-              </template>
-            </ul>
-          </details>
-        </li>
-      </ul>
+    <div class="navbar-center">
+      <ToggleBtn label="filtre" v-model:state="filterBarDisplay"></ToggleBtn>
     </div>
-
-    <div class="flex gap-2">
+    <div class="navbar-end flex gap-6">
       <ThemeSelectorC />
-      <!--      <input type="text" placeholder="Recherche" class="input input-bordered w-24 md:w-auto" />-->
+
       <div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full">
@@ -112,4 +124,7 @@ const currentApp = computed(() => {
       </div>
     </div>
   </div>
+  <template v-if="!filterBarDisplay">
+    <FilterBar></FilterBar>
+  </template>
 </template>
