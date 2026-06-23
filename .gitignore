@@ -36,3 +36,11 @@ Thumbs.db
 node_modules/
 dist/
 .next/
+
+# Base de données locale SQLite
+*.sqlite3
+*.sqlite3-journal
+
+# Configuration de l'IDE PyCharm / JetBrains
+.idea/
+*.iml

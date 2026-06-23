@@ -11,6 +11,7 @@ export const useSubcategoryStore = defineStore('subcategoryStore', () => {
   const subcategories = ref<Subcategory[]>([])
   const loading = ref<boolean>(false)
   const error = ref<string | null>(null)
+  const isFilterActive = ref(false)
 
   async function fetchAll() {
     loading.value = true

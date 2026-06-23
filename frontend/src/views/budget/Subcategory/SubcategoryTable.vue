@@ -76,7 +76,7 @@ function handleDelete(id: number) {
       </thead>
       <tbody>
         <!-- props.categories ou juste categories — les deux fonctionnent -->
-        <tr v-for="subcategory in props.subcategories" :key="subcategory.id">
+        <tr v-for="subcategory in subcategories" :key="subcategory.id">
           <template v-if="editingId === subcategory.id">
             <td><input type="file" accept="image/*" @change="handleEditIconChange" /></td>
             <td><input v-model="editingName" class="input input-bordered input-sm" /></td>

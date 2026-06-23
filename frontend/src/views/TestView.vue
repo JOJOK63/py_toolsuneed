@@ -1,10 +1,6 @@
-<script setup lang="ts">
-import ChildTest from '@/views/ChildTest.vue'
-import { ref } from 'vue'
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <h1>TEST Parent</h1>
-  <ChildTest></ChildTest>
 </template>
 <style scoped></style>
