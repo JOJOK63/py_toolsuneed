@@ -4,12 +4,9 @@ import { useRoute } from 'vue-router'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import NavbarBudget from '@/components/budget/NavbarBudget.vue'
 import NavbarTodolist from '@/components/todolist/NavbarTodolist.vue'
-import FilterBar from '@/components/shared/Bar/FilterBar.vue'
-import ToggleBtn from '@/components/shared/Btn/ToggleBtn.vue'
 
 const route = useRoute()
 const menuOpen = ref(false)
-const filterBarDisplay = ref(false)
 
 function closeMenu() {
   menuOpen.value = false
@@ -98,9 +95,6 @@ const currentApp = computed(() => {
       </div>
     </div>
 
-    <div class="navbar-center">
-      <ToggleBtn label="filtre" v-model:state="filterBarDisplay"></ToggleBtn>
-    </div>
     <div class="navbar-end flex gap-6">
       <ThemeSelectorC />
 
@@ -124,7 +118,4 @@ const currentApp = computed(() => {
       </div>
     </div>
   </div>
-  <template v-if="!filterBarDisplay">
-    <FilterBar></FilterBar>
-  </template>
 </template>
