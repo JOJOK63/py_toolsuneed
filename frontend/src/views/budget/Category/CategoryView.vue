@@ -1,14 +1,27 @@
 <!-- CategoryView.vue -->
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useCategoryStore } from '@/stores/budget/categoryStore'
 import CategoryTable from './CategoryTable.vue'
 import CategoryForm from './CategoryForm.vue'
 import type { CategoryCreate } from '@/api/modules/budget/category'
 import CancelBtn from '@/components/shared/Btn/CancelBtn.vue'
+import FilterBar from '@/components/shared/Bar/FilterBar.vue'
 
 const store = useCategoryStore()
 const modalOpen = ref(false)
+
+const search = ref('')
+
+const filteredCategories = computed(() => {
+  let result = [...store.categories]
+
+  if (search.value) {
+    result = result.filter((s) => s.name.toLowerCase().includes(search.value.toLowerCase()))
+  }
+
+  return result
+})
 
 onMounted(() => store.fetchAll())
 
@@ -39,9 +52,16 @@ async function handleDelete(id: number) {
       <button class="btn btn-sm btn-ghost" @click="store.clearError()">✕</button>
     </div>
 
+    <FilterBar
+      :show-toggle="false"
+      :show-dropdown="false"
+      search-placeholder="Rechercher une catégorie"
+      v-model:research="search"
+    ></FilterBar>
+
     <CategoryTable
       v-if="!store.loading"
-      :categories="store.categories"
+      :categories="filteredCategories"
       @delete="handleDelete"
       @update="handleUpdate"
       @open-modal="modalOpen = true"

@@ -8,7 +8,7 @@ import EditBtn from '@/components/shared/Btn/EditBtn.vue'
 import DeleteBtn from '@/components/shared/Btn/DeleteBtn.vue'
 
 // defineProps = données que le PARENT envoie à ce composant
-// Le parent passe :categories="store.categories"
+// Le parent passe : categories="store.categories"
 const props = defineProps<{
   categories: Category[]
 }>()

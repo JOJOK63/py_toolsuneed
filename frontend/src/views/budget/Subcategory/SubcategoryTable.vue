@@ -97,10 +97,15 @@ function handleDelete(id: number) {
 
           <template v-else>
             <td>
-              <div class="mask mask-squircle h-10 w-10" :style="{}">
+              <div
+                class="mask mask-squircle h-10 w-10"
+                :style="{
+                  background: subcategory.category_detail.color,
+                }"
+              >
                 <img
-                  v-if="subcategory.icon"
-                  :src="subcategory.icon"
+                  v-if="subcategory.category_detail.icon"
+                  :src="subcategory.category_detail.icon"
                   class="h-10 w-10 p-1"
                   :alt="`icone de la ${subcategory.name}`"
                 />

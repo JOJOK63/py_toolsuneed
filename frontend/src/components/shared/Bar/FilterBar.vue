@@ -2,6 +2,7 @@
 import ToggleBtn from '@/components/shared/Btn/ToggleBtn.vue'
 import BaseInput from '@/components/shared/BaseInput.vue'
 import DropDown from '@/components/shared/DropDown.vue'
+import DeleteBtn from '@/components/shared/Btn/DeleteBtn.vue'
 
 withDefaults(
   defineProps<{
@@ -25,6 +26,12 @@ withDefaults(
 const research = defineModel<string>('research', { default: '' })
 const selectedFilter = defineModel<string>('selectedFilter', { default: '' })
 const isFilterActive = defineModel<boolean>('isFilterActive', { default: false })
+
+function resetFilter() {
+  research.value = ''
+  selectedFilter.value = ''
+  isFilterActive.value = false
+}
 </script>
 
 <template>
@@ -38,6 +45,8 @@ const isFilterActive = defineModel<boolean>('isFilterActive', { default: false }
     />
 
     <ToggleBtn v-if="showToggle" :label="toggleLabel" v-model:state="isFilterActive" />
+
+    <DeleteBtn @click="resetFilter" />
   </div>
 </template>
 
