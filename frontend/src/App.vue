@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import AppNavbar from '@/components/shared/Navbar/AppNavbar.vue'
 import { ref } from 'vue'
 

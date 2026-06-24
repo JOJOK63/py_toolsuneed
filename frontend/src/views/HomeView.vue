@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import GenericCardDetail from '@/components/shared/CrudEntityLayout /GenericCardDetail.vue'
+import LoginForm from '@/components/shared/LoginForm.vue'
 </script>
 
 <template>
-  <GenericCardDetail></GenericCardDetail>
+  <LoginForm></LoginForm>
   <RouterView />
 </template>
