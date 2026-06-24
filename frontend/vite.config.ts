@@ -8,15 +8,15 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueJsx(),
-    vueDevTools(),
-    tailwindcss()
-  ],
+  plugins: [vue(), vueJsx(), vueDevTools(), tailwindcss()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  // doute sur l'utilité de cette élément tuto jwt token auth
+  // server: {
+  //   port : 3000,
+  //   strictPort: true
+  // }
 })

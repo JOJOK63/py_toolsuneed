@@ -7,12 +7,7 @@ const router = createRouter({
   routes: [
     { path: '/', name: 'Home', component: () => import('@/views/HomeView.vue') },
     { path: '/test', name: 'Test', component: () => import('@/views/TestView.vue') },
-    {
-      path: '/todolist',
-      name: 'Todolist',
-      component: () => import('@/views/todolist/TodolistView.vue'),
-    },
-
+    ...todolistRoutes,
     ...budgetRoutes,
   ],
 })
