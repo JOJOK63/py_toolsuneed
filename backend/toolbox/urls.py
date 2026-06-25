@@ -30,7 +30,7 @@ urlpatterns = [
     path('api/devise/', include("currency.urls")),
     path('api/todolist/', include("todolist.urls")),
     path('api/', include('auth_app.urls')),
-    
+
     # API schema
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),

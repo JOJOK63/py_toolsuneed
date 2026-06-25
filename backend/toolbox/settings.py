@@ -124,6 +124,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# permet de faire comprendre a Django que son user principal n'est plus le natif
+AUTH_USER_MODEL = 'auth_app.User'
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
