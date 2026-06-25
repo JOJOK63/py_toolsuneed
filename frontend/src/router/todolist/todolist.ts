@@ -4,6 +4,7 @@ const todolistRoutes: RouteRecordRaw[] = [
   {
     path: '/todolist',
     component: () => import('@/views/todolist/TodolistView.vue'),
+    meta: { requiresAuth: true },
     children: [
       // {
       //   path: 'todolists', // → /budget/categories

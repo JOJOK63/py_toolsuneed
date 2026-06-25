@@ -4,6 +4,7 @@ const budgetRoutes: RouteRecordRaw[] = [
   {
     path: '/budget',
     component: () => import('@/views/budget/BudgetView.vue'),
+    meta: { requiresAuth: true },
     children: [
       {
         path: 'categories', // → /budget/categories

@@ -2,38 +2,17 @@
 import { ref } from 'vue'
 import CreateBtn from '@/components/shared/Btn/CreateBtn.vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.ts'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const username = ref('')
 const password = ref('')
-const errorMessage = ref('')
-const showPassword = ref(false)
 
 const handleLogin = async () => {
-  errorMessage.value = ''
-
-  try {
-    const response = await fetch('http://localhost:8000/api/login/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: username.value,
-        password: password.value,
-      }),
-    })
-    if (response.ok) {
-      const data = await response.json()
-      console.log('Login successfull', data)
-      localStorage.setItem('access', data.access)
-      localStorage.setItem('refresh', data.refresh)
-    } else {
-      const errorData = await response.json()
-      console.log('error data', errorData)
-    }
-  } catch (error) {
-    console.log('Error', error)
+  const success = await authStore.login({ username: username.value, password: password.value })
+  if (success) {
+    router.push('/') // ou ta route post-login
   }
 }
 </script>
@@ -50,10 +29,10 @@ const handleLogin = async () => {
         <label class="label">Mot de passe</label>
         <input type="password" class="input" placeholder="Password" v-model="password" required />
 
+        <p v-if="authStore.error" class="text-error text-sm">{{ authStore.error }}</p>
+
         <CreateBtn label="Connexion"></CreateBtn>
       </fieldset>
     </form>
   </div>
 </template>
-
-<style scoped></style>
