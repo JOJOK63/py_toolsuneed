@@ -22,6 +22,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
       const response = await fetchCategoryApi.getAll()
       categories.value = response.data
     } catch (e) {
+      console.log(e)
       error.value = 'Impossible de charger les catégories.'
     } finally {
       loading.value = false // désactive le loader quoi qu'il arrive

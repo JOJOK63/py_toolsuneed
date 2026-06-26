@@ -16,6 +16,11 @@ const budgetRoutes: RouteRecordRaw[] = [
         name: 'Subcategories',
         component: () => import('@/views/budget/Subcategory/SubcategoryView.vue'),
       },
+      {
+        path: 'transactions', // → /budget/subcategories
+        name: 'Transactions',
+        component: () => import('@/views/budget/Transaction/TransactionView.vue'),
+      },
     ],
   },
 ]

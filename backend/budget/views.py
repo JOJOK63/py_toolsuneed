@@ -122,7 +122,7 @@ class FinancialTransactionListCreateView(generics.ListCreateAPIView):
     def get_queryset(self) -> QuerySet:
         budget_id = self.request.query_params.get('budget')
         if not budget_id:
-            return FinancialTransaction.objects.none()
+            return FinancialTransaction.objects.all()
         return FinancialTransaction.objects.filter(budget_id=budget_id)
 
 

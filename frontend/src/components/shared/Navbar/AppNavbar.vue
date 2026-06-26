@@ -48,7 +48,7 @@ function handleLogout() {
 </script>
 
 <template>
-  <div class="navbar bg-base-100 shadow-sm justify-between z-99" @click="handleClickOutside">
+  <div class="navbar bg-base-100 shadow-sm justify-between" @click="handleClickOutside">
     <div class="flex navbar-start">
       <RouterLink to="/" class="btn btn-ghost text-xl">ToolsUneed</RouterLink>
       <div class="">
