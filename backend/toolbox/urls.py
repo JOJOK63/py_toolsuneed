@@ -24,17 +24,16 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', index, name="index"),
     path('admin/', admin.site.urls),
-    path('budget/', include("budget.urls")),
-    path('devise/', include("currency.urls")),
-    path('todolist/', include("todolist.urls")),
 
     #API
+    path('api/budget/', include("budget.urls")),
+    path('api/devise/', include("currency.urls")),
+    path('api/todolist/', include("todolist.urls")),
     path('api/', include('auth_app.urls')),
+
     # API schema
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    # Swagger UI
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    # Redoc (alternative UI)
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 
 ]

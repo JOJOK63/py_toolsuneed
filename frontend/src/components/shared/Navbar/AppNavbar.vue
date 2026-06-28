@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import ThemeSelectorC from '@/components/shared/Navbar/ThemeSelectorC.vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import NavbarBudget from '@/components/budget/NavbarBudget.vue'
 import NavbarTodolist from '@/components/todolist/NavbarTodolist.vue'
+import { useAuthStore } from '@/stores/auth.ts'
 
 const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
 const menuOpen = ref(false)
 
 function closeMenu() {
@@ -37,10 +40,15 @@ const currentApp = computed(() => {
 
   return 'home'
 })
+
+function handleLogout() {
+  authStore.logout()
+  router.push('/login')
+}
 </script>
 
 <template>
-  <div class="navbar bg-base-100 shadow-sm justify-between z-99" @click="handleClickOutside">
+  <div class="navbar bg-base-100 shadow-sm justify-between" @click="handleClickOutside">
     <div class="flex navbar-start">
       <RouterLink to="/" class="btn btn-ghost text-xl">ToolsUneed</RouterLink>
       <div class="">
@@ -113,7 +121,12 @@ const currentApp = computed(() => {
         >
           <li><a class="justify-between">Profil</a></li>
           <li><a>Options</a></li>
-          <li><a>Déconnexion</a></li>
+          <li v-if="authStore.isAuthenticated">
+            <a @click="handleLogout">Déconnexion</a>
+          </li>
+          <li v-else>
+            <RouterLink to="/login">Connexion</RouterLink>
+          </li>
         </ul>
       </div>
     </div>

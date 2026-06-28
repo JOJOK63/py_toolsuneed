@@ -1,5 +1,5 @@
+from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
 
 # Les choix possibles pour la devise
 CURRENCY_CHOICES = [
@@ -41,8 +41,10 @@ class Budget(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
     def __str__(self) -> str:
         return self.name
 

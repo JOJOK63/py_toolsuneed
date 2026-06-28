@@ -56,18 +56,23 @@ setup: build up
 	@echo "Admin créé avec les identifiants du fichier .env"
 	@echo "============================================="
 
+# ----- Migration -----
+
+mm:
+	docker compose exec $(BACKEND_SERVICE) python manage.py makemigrations
+
 ##### Logs généraux ou pour chaque container
 logs:
 	docker compose -f $(DOCKER_COMPOSE) logs -f
 
 logs-b:
-	docker compose -f $(DOCKER_COMPOSE) logs backend
+	docker compose -f $(DOCKER_COMPOSE) logs $(BACKEND_SERVICE)
 
 logs-f:
-	docker compose -f $(DOCKER_COMPOSE) logs frontend
+	docker compose -f $(DOCKER_COMPOSE) logs $(FRONTEND_SERVICE)
 
 logs-db:
-	docker compose -f $(DOCKER_COMPOSE) logs db
+	docker compose -f $(DOCKER_COMPOSE) logs $(DB_SERVICE)
 
 status:
 	docker compose -f $(DOCKER_COMPOSE) ps

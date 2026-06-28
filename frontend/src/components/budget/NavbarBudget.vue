@@ -34,4 +34,13 @@ const props = defineProps<{
       Sous-catégories
     </RouterLink>
   </li>
+  <li>
+    <RouterLink
+      to="/budget/transactions"
+      @click="props.onClose"
+      :class="{ active: route.path === '/budget/subcategories' }"
+    >
+      Transactions
+    </RouterLink>
+  </li>
 </template>

@@ -4,10 +4,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import LoginSerializer
-from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 
+User = get_user_model()
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
@@ -15,6 +16,7 @@ class LoginView(APIView):
     def post(self, request : Request) -> Response:
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
+            # todo Change username for email
             username = serializer.validated_data.get('username')
             password = serializer.validated_data.get('password')
 

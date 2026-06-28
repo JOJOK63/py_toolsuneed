@@ -4,6 +4,7 @@ const budgetRoutes: RouteRecordRaw[] = [
   {
     path: '/budget',
     component: () => import('@/views/budget/BudgetView.vue'),
+    meta: { requiresAuth: true },
     children: [
       {
         path: 'categories', // → /budget/categories
@@ -14,6 +15,11 @@ const budgetRoutes: RouteRecordRaw[] = [
         path: 'subcategories', // → /budget/subcategories
         name: 'Subcategories',
         component: () => import('@/views/budget/Subcategory/SubcategoryView.vue'),
+      },
+      {
+        path: 'transactions', // → /budget/subcategories
+        name: 'Transactions',
+        component: () => import('@/views/budget/Transaction/TransactionView.vue'),
       },
     ],
   },
