@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework.request import Request
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -10,10 +11,13 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 User = get_user_model()
 
+
 class LoginView(APIView):
     permission_classes = [AllowAny]
+    authentication_classes = []
 
-    def post(self, request : Request) -> Response:
+    @extend_schema(request=LoginSerializer)
+    def post(self, request: Request) -> Response:
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             # todo Change username for email

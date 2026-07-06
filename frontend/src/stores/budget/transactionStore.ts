@@ -8,11 +8,11 @@ export const useTransactionStore = defineStore('transactionStore', () => {
   const loading = ref<boolean>(false)
   const error = ref<string | null>(null)
   const transactionsTypes = TRANSACTION_TYPES
+  const isFilterActive = ref(false)
 
   async function fetchAll() {
     loading.value = true
     error.value = null
-
     try {
       const response = await fetchTransactionApi.getAll()
       transactions.value = response.data

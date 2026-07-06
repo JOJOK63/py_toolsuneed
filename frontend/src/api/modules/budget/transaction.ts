@@ -1,5 +1,6 @@
 import api from '@/api'
 import type { TransactionType } from '@/api/modules/budget/transactionTypes.ts'
+import type { Subcategory } from '@/api/modules/budget/subcategory.ts'
 
 export interface Transaction {
   id: number
@@ -9,8 +10,8 @@ export interface Transaction {
   transactionType: TransactionType
   createdAt: Date
   updatedAt: Date
-  // budget: number
-  // subcategory: number | null
+  budget: number
+  subcategory: Subcategory
 }
 
 export const fetchTransactionApi = {

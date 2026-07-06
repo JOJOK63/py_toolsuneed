@@ -38,7 +38,7 @@ const props = defineProps<{
     <RouterLink
       to="/budget/transactions"
       @click="props.onClose"
-      :class="{ active: route.path === '/budget/subcategories' }"
+      :class="{ active: route.path === '/budget/transactions' }"
     >
       Transactions
     </RouterLink>

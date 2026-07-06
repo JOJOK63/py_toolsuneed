@@ -54,7 +54,7 @@ class FinancialTransaction(models.Model):
     detail = models.TextField(blank=True)
     transaction_type = models.CharField(max_length=4, choices=TRANSACTION_TYPE)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE)
     subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True, blank=True)  # nullable ✅

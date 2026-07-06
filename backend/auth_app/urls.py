@@ -5,5 +5,5 @@ from auth_app.views import LoginView
 
 urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/refresh/', TokenRefreshView.as_view(authentication_classes=[]), name='token_refresh'),
 ]
