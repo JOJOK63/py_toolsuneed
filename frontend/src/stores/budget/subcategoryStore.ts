@@ -20,7 +20,6 @@ export const useSubcategoryStore = defineStore('subcategoryStore', () => {
       const response = await fetchSubcategoryApi.getAll()
       subcategories.value = response.data
     } catch (e) {
-      console.log(e)
       error.value = 'Impossible de charger les sous catégories'
     } finally {
       loading.value = false

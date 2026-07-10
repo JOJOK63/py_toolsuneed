@@ -17,7 +17,7 @@ const filteredFinancialTransactions = computed(() => {
 
 onMounted(() => {
   store.fetchAll()
-  storeSubcategory.fetchAll()
+  // storeSubcategory.fetchAll()
 })
 </script>
 

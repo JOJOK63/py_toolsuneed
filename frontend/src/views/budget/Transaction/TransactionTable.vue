@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import AddBtn from '@/components/shared/Btn/AddBtn.vue'
-import SaveBtn from '@/components/shared/Btn/SaveBtn.vue'
 import EditBtn from '@/components/shared/Btn/EditBtn.vue'
-import CancelBtn from '@/components/shared/Btn/CancelBtn.vue'
 import DeleteBtn from '@/components/shared/Btn/DeleteBtn.vue'
 import type { Transaction } from '@/api/modules/budget/transaction.ts'
 
@@ -13,7 +11,6 @@ const props = defineProps<{
 const emit = defineEmits<{
   openModal: []
 }>()
-console.log(props.transactions)
 </script>
 
 <template>
@@ -65,7 +62,7 @@ console.log(props.transactions)
               {{ transaction.subcategory?.name }}
               <span>{{ transaction.subcategory?.category_detail?.name }}</span>
             </td>
-            <td class="font-bold">{{ transaction.createdAt }}</td>
+            <td class="font-bold">transaction.createdAt</td>
             <td class="font-bold">{{ transaction.updatedAt }}</td>
             <td>
               <div class="flex gap-5">
