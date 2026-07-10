@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ThemeSelectorC from '@/components/shared/Navbar/ThemeSelectorC.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import NavbarBudget from '@/components/budget/NavbarBudget.vue'
 import NavbarTodolist from '@/components/todolist/NavbarTodolist.vue'
 import { useAuthStore } from '@/stores/auth.ts'
@@ -9,35 +9,28 @@ import { useAuthStore } from '@/stores/auth.ts'
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
-const menuOpen = ref(false)
+
+// Ref directe sur l'élément <details>, plus fiable qu'un querySelector global
+const detailsRef = ref<HTMLDetailsElement | null>(null)
 
 function closeMenu() {
-  menuOpen.value = false
-}
-
-function handleClickOutside(event: MouseEvent) {
-  const target = event.target as HTMLElement
-  if (!target.closest('details')) {
-    menuOpen.value = false
+  if (detailsRef.value) {
+    detailsRef.value.open = false
   }
 }
 
-// Au montage du composant → on écoute les clics sur TOUT le document
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
-})
+// Ferme le menu automatiquement à chaque changement de route
+// → règle le souci de navbar qui ne se met pas à jour après navigation
+watch(
+  () => route.path,
+  () => {
+    closeMenu()
+  },
+)
 
-// Au démontage → on retire l'écouteur pour éviter les fuites mémoire
-onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside)
-})
-
-// can change and make an adaptive bar, just add route path here
 const currentApp = computed(() => {
   if (route.path.startsWith('/budget')) return 'budget'
-
   if (route.path.startsWith('/todolist')) return 'todolist'
-
   return 'home'
 })
 
@@ -48,17 +41,13 @@ function handleLogout() {
 </script>
 
 <template>
-  <div class="navbar bg-base-100 shadow-sm justify-between" @click="handleClickOutside">
+  <div class="navbar bg-base-100 shadow-sm justify-between">
     <div class="flex navbar-start">
       <RouterLink to="/" class="btn btn-ghost text-xl">ToolsUneed</RouterLink>
       <div class="">
         <ul class="menu menu-horizontal px-1">
           <li>
-            <details
-              :open="menuOpen"
-              @toggle="menuOpen = ($event.target as HTMLDetailsElement).open"
-            >
-              <!-- Le titre du menu change selon l'app -->
+            <details ref="detailsRef">
               <summary>
                 {{
                   currentApp === 'budget'
@@ -70,7 +59,6 @@ function handleLogout() {
               </summary>
 
               <ul class="p-2 bg-base-100 w-40 z-1">
-                <!-- Menu HOME -->
                 <template v-if="currentApp === 'home'">
                   <li>
                     <RouterLink to="/" @click="closeMenu" :class="{ active: route.path === '/' }">
@@ -88,7 +76,6 @@ function handleLogout() {
                   </li>
                 </template>
 
-                <!-- Menu BUDGET -->
                 <template v-else-if="currentApp === 'budget'">
                   <NavbarBudget :on-close="closeMenu" />
                 </template>

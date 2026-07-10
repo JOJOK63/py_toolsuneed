@@ -6,7 +6,7 @@ export interface Subcategory {
   name: string
   icon: string
   category: number
-  category_detail: Category
+  categoryDetail: Category
 }
 
 export type SubcategoryCreate = {

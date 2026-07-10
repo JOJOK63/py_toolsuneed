@@ -44,11 +44,14 @@ class BudgetSerializer(serializers.ModelSerializer[Budget]):
 
 
 class FinancialTransactionSerializer(serializers.ModelSerializer[FinancialTransaction]):
-    # For DRF Spectacular dropdown
-    subcategory_detail: SubcategorySerializer = SubcategorySerializer(
-        source='subcategory',
-        read_only=True
+    # ÉCRITURE : accepte l'id de la subcategory, ou null
+    subcategory = serializers.PrimaryKeyRelatedField(
+        queryset=Subcategory.objects.all(),
+        required=False,
+        allow_null=True
     )
+    # LECTURE SEULE : renvoie l'objet complet, ou null
+    subcategory_detail = SubcategorySerializer(source='subcategory', read_only=True)
 
     class Meta:
         model = FinancialTransaction

@@ -20,11 +20,12 @@ const emit = defineEmits<{
         <tr>
           <th>Nom</th>
           <th>Montant</th>
-          <th>detail</th>
-          <th>type</th>
-          <th>Sous catégorie / catégorie</th>
-          <th>créer le</th>
-          <th>modifier le</th>
+          <th>Detail</th>
+          <th>Type</th>
+          <th>Sous catégorie</th>
+          <th>Catégorie</th>
+          <th>Créer le</th>
+          <th>Modifier le</th>
           <th class="flex items-center gap-3">
             <p>Actions</p>
             <AddBtn @click="emit('openModal')" />
@@ -58,12 +59,26 @@ const emit = defineEmits<{
             <td class="font-bold">{{ transaction.amount }}</td>
             <td class="font-bold">{{ transaction.detail }}</td>
             <td class="font-bold">{{ transaction.transactionType }}</td>
-            <td>
-              {{ transaction.subcategory?.name }}
-              <span>{{ transaction.subcategory?.category_detail?.name }}</span>
+            <td class="font-bold">
+              {{ transaction.subcategoryDetail?.name }}
             </td>
-            <td class="font-bold">transaction.createdAt</td>
-            <td class="font-bold">{{ transaction.updatedAt }}</td>
+            <td class="font-bold flex items-center justify-center">
+              <div
+                class="mask mask-squircle h-10 w-10"
+                :style="{
+                  background: transaction.subcategoryDetail?.categoryDetail.color,
+                }"
+              >
+                <img
+                  v-if="transaction.subcategoryDetail?.categoryDetail.icon"
+                  :src="transaction.subcategoryDetail?.categoryDetail.icon"
+                  class="h-10 w-10 p-1"
+                  :alt="`icone de la ${transaction.subcategoryDetail?.categoryDetail.name}`"
+                />
+              </div>
+            </td>
+            <td class="font-bold">{{ transaction.createdAt.toLocaleString('fr-FR') }}</td>
+            <td class="font-bold">{{ transaction.updatedAt.toLocaleString('fr-FR') }}</td>
             <td>
               <div class="flex gap-5">
                 <!--                todo edit btn-->

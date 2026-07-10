@@ -1,19 +1,27 @@
 import axios from 'axios'
+import camelcaseKeys from 'camelcase-keys'
+import snakecaseKeys from 'snakecase-keys'
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 })
 
-// --- INTERCEPTOR DE REQUÊTE : injecte le token à chaque appel ---
+// --- INTERCEPTOR DE REQUÊTE : injecte le token + convertit camelCase -> snake_case ---
 api.interceptors.request.use((config) => {
   const access = localStorage.getItem('access')
   if (access) {
     config.headers.Authorization = `Bearer ${access}`
   }
+
+  // On ne convertit que les payloads JSON classiques (pas FormData, pas les uploads d'images)
+  if (config.data && !(config.data instanceof FormData)) {
+    config.data = snakecaseKeys(config.data, { deep: true })
+  }
+
   return config
 })
 
-// --- INTERCEPTOR DE RÉPONSE : gère le refresh automatique sur 401 ---
+// --- INTERCEPTOR DE RÉPONSE : convertit snake_case -> camelCase + gère le refresh automatique sur 401 ---
 let isRefreshing = false
 let refreshSubscribers: ((token: string) => void)[] = []
 
@@ -23,18 +31,21 @@ function onRefreshed(token: string) {
 }
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    if (response.data) {
+      response.data = camelcaseKeys(response.data, { deep: true })
+    }
+    return response
+  },
   async (error) => {
     const originalRequest = error.config
 
-    // Si pas 401, ou si on a déjà tenté un refresh pour cette requête → on laisse planter
     if (error.response?.status !== 401 || originalRequest._retry) {
       return Promise.reject(error)
     }
 
     const refreshToken = localStorage.getItem('refresh')
     if (!refreshToken) {
-      // pas de refresh dispo → déconnexion forcée
       localStorage.removeItem('access')
       localStorage.removeItem('refresh')
       window.location.href = '/login'
@@ -44,7 +55,6 @@ api.interceptors.response.use(
     originalRequest._retry = true
 
     if (isRefreshing) {
-      // une requête refresh est déjà en cours : on attend qu'elle finisse
       return new Promise((resolve) => {
         refreshSubscribers.push((token: string) => {
           originalRequest.headers.Authorization = `Bearer ${token}`

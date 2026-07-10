@@ -2,18 +2,22 @@
 import CreateBtn from '@/components/shared/Btn/CreateBtn.vue'
 import { ref } from 'vue'
 import type { TRANSACTION_TYPES } from '@/api/modules/budget/transactionTypes.ts'
+import type { Subcategory } from '@/api/modules/budget/subcategory.ts'
 
 const showToast = ref(false)
 const newName = ref('')
 const newAmount = ref(0)
 const newDetail = ref('')
 const selectedTypeId = ref('')
+const selectedSubcategoryId = ref('')
 
 const props = defineProps<{
   error?: string | null
+  subcategories: Subcategory[]
   transactionTypes: typeof TRANSACTION_TYPES
 }>()
 
+console.log(props.subcategories)
 function handleSubmit() {
   alert('a faire')
 }
@@ -58,6 +62,17 @@ function handleSubmit() {
           :value="transactionType.value"
         >
           {{ transactionType.label }}
+        </option>
+      </select>
+      <label class="label">Sous catégorie</label>
+      <select v-model="selectedSubcategoryId" class="select" required>
+        <option disabled>Choisir une sous catégorie</option>
+        <option
+          v-for="subcategory in props.subcategories"
+          :key="subcategory.id"
+          :value="subcategory.name"
+        >
+          {{ subcategory.name }}
         </option>
       </select>
       <CreateBtn />

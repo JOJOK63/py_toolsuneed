@@ -1,10 +1,8 @@
-<!-- NavbarBudget.vue -->
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-// NavbarBudget reçoit closeMenu du parent via props
 const props = defineProps<{
   onClose: () => void
 }>()

@@ -100,12 +100,12 @@ function handleDelete(id: number) {
               <div
                 class="mask mask-squircle h-10 w-10"
                 :style="{
-                  background: subcategory.category_detail.color,
+                  background: subcategory.categoryDetail.color,
                 }"
               >
                 <img
-                  v-if="subcategory.category_detail.icon"
-                  :src="subcategory.category_detail.icon"
+                  v-if="subcategory.categoryDetail.icon"
+                  :src="subcategory.categoryDetail.icon"
                   class="h-10 w-10 p-1"
                   :alt="`icone de la ${subcategory.name}`"
                 />
@@ -114,7 +114,7 @@ function handleDelete(id: number) {
             <td class="font-bold">{{ subcategory.name }}</td>
             <td>
               <span class="inline-block w-6 h-6 rounded" :style="{}">{{
-                subcategory.category_detail.name
+                subcategory.categoryDetail.name
               }}</span>
             </td>
             <td>

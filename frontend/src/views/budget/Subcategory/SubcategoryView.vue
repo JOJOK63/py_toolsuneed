@@ -27,12 +27,12 @@ const filteredSubcategories = computed(() => {
   }
 
   if (selectedCategory.value) {
-    result = result.filter((s) => s.category_detail?.name === selectedCategory.value)
+    result = result.filter((s) => s.categoryDetail?.name === selectedCategory.value)
   }
 
   if (sortByCategory.value) {
     result.sort((a, b) =>
-      (a.category_detail?.name || '').localeCompare(b.category_detail?.name || ''),
+      (a.categoryDetail?.name || '').localeCompare(b.categoryDetail?.name || ''),
     )
   }
 
