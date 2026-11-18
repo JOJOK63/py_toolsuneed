@@ -27,5 +27,5 @@ pre-commit==4.5.1
 
 #Pillow
 Pillow==12.2.0
-sqlparse>=0.5.0 # not directly required, pinned by Snyk to avoid a vulnerability
+sqlparse>=0.6.0 # not directly required, pinned by Snyk to avoid a vulnerability
 zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
