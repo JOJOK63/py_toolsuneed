@@ -1,4 +1,4 @@
-FROM node:22.23.5
+FROM node:22.23.5-trixie-slim
 WORKDIR /app
 COPY package*.json .
 RUN npm install
